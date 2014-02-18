@@ -1,0 +1,58 @@
+h1
+{
+  font-size: 48px;
+  font-weight: 700;
+  color: #8E44AD;
+}
+h2
+{
+  font-size: 36px;
+  font-weight: 700;
+  color: #8E44AD;
+}
+body 
+{
+  font-family: 'Lato', sans-serif;
+  line-height: 1.8;
+  font-size: 18px;
+}
+.headerText
+{
+  margin-top: 40px;
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+.mainPost
+{
+  font-size: 20px;
+}
+.post
+{
+  margin-bottom: 40px;
+}
+.postHeader
+{
+  margin-top: 70px;
+}
+.postDate
+{
+  font-size: 18px;
+  color: #898988;
+}
+a:hover
+{
+  text-decoration: none !important;
+}
+footer
+{
+  clear: both;
+  border-top: 1px #E9E9E9 solid;
+  margin-top: 1em;
+  padding-top: 3em;
+  font-size: 14px;
+}
+.rss
+{
+  float: right;
+  text-align: right;
+}

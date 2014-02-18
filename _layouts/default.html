@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{ page.title }}</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/bootstrap/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+
+    </head>
+    <body>
+      <div id="main-viewport">
+        <div class="container">
+          <div class="header">
+            <a href="/"><h1>{{ site.name }}</h1></a>
+          </div>
+
+          {{ content }}
+
+          <footer>
+            <div class="row">
+              <div class="col-md-8">
+                <p>Created by <a href="http://austincherry.me">Austin</a> and <a href="http://daltoniam.com">Dalton Cherry</a>, and released under a <a href="http://creativecommons.org/licenses/by-nc/3.0/" rel="license">Creative Commons BY-NC License</a></p>
+              </div>
+              <div class="col-md-4 rss">
+                <a href="/feed.xml">RSS</a>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </body>
+</html>
