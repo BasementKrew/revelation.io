@@ -19,10 +19,19 @@
     <body>
       <div id="main-viewport">
         <div class="container">
-          <div class="header">
-            <a href="/"><h1>{{ site.name }}</h1></a>
+          <div class="row">
+            <div class="col-md-2">
+              <div class="header">
+                <a href="/"><img src='/assets/images/logo.png' /></a>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <p class="headerText">{{ site.description }}</p>
+            </div>
           </div>
+          
           {{ content }} 
+
           <footer>
             <div class="row">
               <div class="col-md-8">

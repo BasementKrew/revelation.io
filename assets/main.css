@@ -16,11 +16,19 @@ body
   line-height: 1.8;
   font-size: 18px;
 }
-.headerText
+.header
 {
   margin-top: 40px;
+}
+.headerText
+{
+  margin-top: 80px;
   font-size: 24px;
   margin-bottom: 40px;
+}
+#post-content
+{
+  margin-top: 40px;
 }
 .mainPost
 {
