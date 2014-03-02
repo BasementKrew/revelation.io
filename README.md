@@ -1,4 +1,4 @@
-revelation.io
+vluxe.io
 =============
 
-Weekly Journal from the Revelation team
+Weekly Journal from the vluxe team
