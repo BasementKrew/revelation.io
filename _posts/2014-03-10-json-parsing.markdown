@@ -1,13 +1,13 @@
 ---
 layout: post
 title:  "JSON Serializing with the Objective-C Runtime"
-date:   2014-02-21 08:00:00
+date:   2014-03-10 08:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
 summary: "Despite the addition of NSJSONSerialization in iOS 5 and OSX 10.7, a lot of boilerplate can go into mapping the Foundation objects values to proper object properties. Lucky for us, Objective-C has a dynamic runtime to help us out."
 tags: JSON, foundation, serialize, parse, NSJSONSerialization
 ---
 
-JSON is all the rage nowadays. It seems every major SaaS, framework, and language supports JSON and Objective-C is no exception. [Programmable Web](http://blog.programmableweb.com/2011/05/25/1-in-5-apis-say-bye-xml/) reported in 2011 that 1 in 5 new APIs are designed with JSON only. 
+JSON is all the rage nowadays. It seems every major SaaS, framework, and language supports JSON and Objective-C is no exception. [Programmable Web](http://blog.programmableweb.com/2011/05/25/1-in-5-apis-say-bye-xml/) reported in 2011 that 1 in 5 new APIs are designed with JSON only.
 
 ![](http://blog.programmableweb.com/wp-content/jsononly.png)
 
@@ -95,11 +95,11 @@ that is a **lot** of boilerplate and error prone due to the key value access of 
         objc_property_t property = properties[i];
         NSString* propName = [NSString stringWithUTF8String:property_getName(property)];
         const char *type = property_getAttributes(property);
-        
+
         NSString *typeString = [NSString stringWithUTF8String:type];
         NSArray *attributes = [typeString componentsSeparatedByString:@","];
         NSString *typeAttribute = [attributes objectAtIndex:0];
-        
+
         if ([typeAttribute hasPrefix:@"T@"] && [typeAttribute length] > 3)
         {
             NSString * typeClassName = [typeAttribute substringWithRange:NSMakeRange(3, [typeAttribute length]-4)];  //turns @"NSDate" into NSDate
@@ -115,14 +115,14 @@ that is a **lot** of boilerplate and error prone due to the key value access of 
         [gather addObjectsFromArray:[self getPropertiesOfClass:[objectClass superclass]]];
     return gather;
 }
-{% endhighlight %} 
+{% endhighlight %}
 
 Let's break down what is happening. Objective-C is a dynamic language as previously mentioned. This differs from more common languages like C++ or Java. We could spend a whole article (and probably will) on the differences between dynamic and static languages, but for now let's just settle on a 10,000 foot explanation. A dynamic language is where method execution is done at runtime. This means a method does not technically have to exist before we start running the application. Due to this design, we get a lot of power to easily inspect the object at runtime and find its properties. If you want to learn more about the runtime, [Mark Dalrymple](https://twitter.com/borkware) at [Big Nerd Ranch](http://bignerdranch.com) has a great set of [articles](http://blog.bignerdranch.com/2833-inside-the-bracket-part-1-open-for-business/) that explain this subject in depth.
 
 Now for the code, `objc_property_t` is a C structure, which the comments define as
 {% highlight objective-c %}
 An opaque type that represents an Objective-C declared property.
-{% endhighlight %} 
+{% endhighlight %}
 `class_copyPropertyList` returns a C array of these structures. Next, we iterate over them with a standard `for` loop and process each structure in the array. First, we get the name of the property via `property_getName`. Next, we pull the attributes of the property via `property_getAttributes` and separate them out to get the ones we want. We are primarily interested in the first attribute which we can use to get the class of the property. Using `NSClassFromString` we can convert the string name of the class into the class representation. Lastly, we clean up our C array with `free()` and check if we need to get our super class' properties.
 
 Ok great, now we have both the property names and their classes. Let's take a look at our list
@@ -151,7 +151,7 @@ armed with this information we can easily map the JSON object to our `User` obje
     }
     return propName;
 }
-{% endhighlight %} 
+{% endhighlight %}
 
 This method takes our property name of `firstName` and converts it to `first_name` so that when we search in the NSDictonary returned from NSJSONSerialization, we will find the correct key name. After that it is a simple loop to get the values matched up
 
@@ -160,10 +160,10 @@ User *john = [[User alloc] init];
 for(NSString* propName in propArray) //propArray is a NSArray of our property names
 {
   NSString* jsonName = [self convertToJsonName:propName];
-  id value = jsonDict[jsonName]; 
+  id value = jsonDict[jsonName];
   [john setValue:value forKey:propName];
 }
-{% endhighlight %} 
+{% endhighlight %}
 
 much better. All we had to do, was loop through our property array and convert the property name to the JSON style name and use \*KVC to set the property's value. The boilerplate has been eliminated and our code is now much less error prone. This example left out how to get the child object(address), but that is fairly straight forward with a little recursion. If you are interested in seeing that implementation I wrote a library. You can check out [JSONJoy here](https://github.com/daltoniam/JSONJoy). Using JSONJoy with the same example from above, we can shorten the parsing to a single line.
 
@@ -171,16 +171,13 @@ much better. All we had to do, was loop through our property array and convert t
 //responseObject is a NSDictonary from NSJSONSerialization or a NSString of the JSON string.
 User *john = [User objectWithJoy:responseObject];
 //JSON is fully parsed and mapped to our john User object.
-{% endhighlight %} 
+{% endhighlight %}
 
 Objective-C is not the only language with a dynamic runtime and I would be interested in seeing this same implementation in other languages. If you run across one or create one, please let me know. Using Objective-C with a bit of creativity and its powerful dynamic runtime, we can take a common, mundane, and error prone task, and turn it into a concise and joyful experience. JSON never looked so good!
 
-Thoughts? Questions? Feedback? Hit me up on Twitter at [@daltoniam](http://twitter.com/daltoniam). 
+Thoughts? Questions? Feedback? Hit me up on Twitter at [@daltoniam](http://twitter.com/daltoniam).
 
 \***KVC**: Key Value Coding. If you want to learn more about KVC check out these links:
 
 - [Apple Docs](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html)
 - [objc.io](http://www.objc.io/issue-7/key-value-coding-and-observing.html)
-
-
-
