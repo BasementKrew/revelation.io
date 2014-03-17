@@ -1,0 +1,14 @@
+---
+layout: post
+title:  "HTTP and RESTful networking from a client side programmer"
+date:   2014-03-24 08:00:00
+author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+summary: "Today we venture to dig down into the raw building blocks of HTTP and define what exactly RESTful means for a client side programmer."
+tags: HTTP, REST, objective-C, objc, ruby, rails, GET, POST, PUT, 
+---
+
+Using HTTP RESTful. Arguable the most used design pattern and protocol in computer science today. Despite its common use, have we taken the time to dig down and understand what is happening in under the hood?
+
+Let's start by getting some terms defined. HTTP is defined as the "Hypertext Transfer Protocol". It is the core of how we communicate on the web today. In fact you had to use HTTP to read this article right now. REST is defined as "Representational state transfer". It is a design pattern for HTTP 1.1 to use it efficiently. REST is a way to use HTTP to maximize the use of the HTTP protocol. Before we dig to deep into REST let's step back and take a deeper look at HTTP.
+
+HTTP is build on the TCP (Transmission Control Protocol). Without diving to deep into TCP (we will do that in a week or two), it provides a reliable, ordered connection. This means it guarantees that we will receive or more specifically know, if we have received all the data sent. A great analogy of this is when buying items from a store (like groceries, a cup of noodles, or the latest Apple products.). When you finish your purchase, you are given a receipt that a breaks down what you bought. This allows you to guarantee you got everything you purchased. The same thing exist in TCP, the protocol allows us to make sure we got all the data we request, which is good, so we aren't missing pieces of our web page (this article might be tough to understand otherwise!). 
