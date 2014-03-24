@@ -169,9 +169,9 @@ Connection: close
 ```
 We already know what HTTP/1.1 is about. `200` is the HTTP status code of request. This is the servers way of telling the client if everything went as expected. A general rule of thumb for the status codes are: 2XX means the action was successful. 3XX means the request is redirecting somewhere else. 4XX means the request was not accessible (did not exist, does not have permissions, etc). 5XX means the server had an error, and the request was not successful. 
 
-We know already know what values below that are. They are headers values, just like the send request. They also use the `\r\n` just like the send (hurray for consistency). After the headers, the rest of the content is the HTTP payload which is the content we will do something, in this example, we would display the HTML for this page.
+We know already know what values below that are. They are headers values, just like the send request. They also use the `\r\n` just like the send (hurray for consistency). After the headers, the rest of the content is the HTTP payload which is the content we will do something with. For this example, we would display the HTML for this page.
 
-In closing, this is not an exhaustive list of all the things HTTP can do. HTTP has been extend and is a constantly evolving for new demands of applications. Hopefully this gives you a base of how HTTP works and what is involved in create a HTTP request (and maybe some more appreciation for the teams that make this all some simple really APIs!). 
+In closing, this is not an exhaustive list of all the things HTTP can do. HTTP has been extended and is a constantly evolving for new demands of applications. Hopefully this gives you a base of how HTTP works and what is involved in create a HTTP request (and maybe some more appreciation for the teams that make this all some simple really APIs!). 
 
 For my current academic ventures, I am working on create a fully native OS X packet capture app called [Orca](https://github.com/Vluxe/Orca). I plan to continue to write about different networking related subjects as I continue my journey in the development of this app. 
 
