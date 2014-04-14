@@ -147,7 +147,7 @@ Host: www.example.com
 
 Alright, that was a lot to digest, but we now know how to boss our web server around. It is important to note there are a couple of other verbs, but the ones listed are the most common. Now I am sure you having been thinking, "this is all great pearls of wisdom, but what about the response, man?" (I know, I am basically a mind reader). Fair enough, up to this point we have only been concerned with our actions, now let's take a look at our responses.
 
-The good news is the different verbs are pretty consist in there responses. Here is an example response
+The good news is the different verbs are pretty consist in their responses. Here is an example response
 
 ```
 HTTP/1.1 200 OK
