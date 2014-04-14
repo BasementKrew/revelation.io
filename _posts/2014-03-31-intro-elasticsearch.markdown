@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Intro to ElasticSearch"
-date:   2014-03-29 08:00:00
+date:   2014-03-31 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
 summary: "The long journey, sleepless nights, and overwhelming bouts to learn the beauty of full text searching in ElasticSearch."
 tags: searching, elasticsearch, ruby, rails
