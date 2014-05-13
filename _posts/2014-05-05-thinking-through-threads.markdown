@@ -52,7 +52,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             });
  ```
 
- From this simple example, we can see how easy this really is. We where able to do some work on a background thread then do work on the main thread, all in a simple and clean API (partly thanks to blocks!). We only scratch the surface of what GCD can do (seamphores, signals, async I/O to name a few), I encourage you to read through the source and the Apple articles about GCD (and they aren't super boring documentation or whatever, so read them!). As always, questions, comments, feedback are appreciated.
+ From this simple example, we can see how easy this really is. We where able to do some work on a background thread then do work on the main thread, all in a simple and clean API (partly thanks to blocks!). We only scratch the surface of what GCD can do (seamphores, signals, async I/O to name a few), I encourage you to read through the source and the Apple articles about GCD (and they aren't super boring documentation or whatever, so read them!). As always, questions, comments, and feedback are appreciated.
 
  Twitter: [@daltoniam](https://twitter.com/daltoniam).
 
