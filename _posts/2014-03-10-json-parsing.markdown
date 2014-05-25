@@ -13,7 +13,7 @@ JSON is all the rage nowadays. It seems every major SaaS, framework, and languag
 
 Fast forward to 2014, clearly JSON has become the dominant format. NSJSONSerialization gives us a great start, yet still a lot of boilerplate can go into creating and mapping JSON to proper objects. Let's take this JSON as an example
 
-{% highlight javascript %}
+{% highlight js %}
 {
     "id" : 1
     "first_name": "John",
@@ -28,11 +28,11 @@ Fast forward to 2014, clearly JSON has become the dominant format. NSJSONSeriali
      }
 
 }
-{% endhighlight %}  
+{% endhighlight %}
 
 Now we would want to map this to a model class to the tune of:
 
-{% highlight objective-c %}
+{% highlight objc %}
 
 @interface Address : NSObject
 
@@ -54,7 +54,7 @@ Now we would want to map this to a model class to the tune of:
 
 @end
 
-{% endhighlight %}  
+{% endhighlight %}
 
 Now a common way to accomplish this would be with boilerplate:
 
@@ -77,7 +77,7 @@ john.address.city = address[@"city"];
 john.address.state = address[@"state"];
 john.address.postalCode = address[@"postal_code"];
 
-{% endhighlight %}  
+{% endhighlight %}
 
 that is a **lot** of boilerplate and error prone due to the key value access of the dictionary. Thanks to the dynamic runtime we can eliminate this completely. First, we need to get the properties of the `User` object to know which JSON keys we need to map to the `User` object's properties.
 

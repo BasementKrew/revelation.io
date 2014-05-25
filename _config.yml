@@ -1,6 +1,6 @@
 name: vluxe.io
 markdown: redcarpet
-pygments: true
+highlighter: pygments
 permalink: none
 description:  vluxe.io is a collection of interesting computer science and programming topics. Updated weekly.
 url: http://vluxe.io
