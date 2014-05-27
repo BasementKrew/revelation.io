@@ -152,7 +152,7 @@ Well, that about wraps up our article on the archive package. As with all exampl
 
 [Twitter](https://twitter.com/AC_Macalister)
 
-[Golang Book](http://www.golang-book.org)
+[Golang Book](http://www.golang-book.com)
 
 [Tour of Go](http://tour.golang.org)
 
