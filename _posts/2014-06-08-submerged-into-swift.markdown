@@ -27,7 +27,7 @@ for(int i = 0; i < 10; i++) {
 
 Swift version:
 
-```go
+```swift
 var name = "Dalton"
 //some string interpolation
 var str = "hello \(name), how are you doing?"
@@ -47,7 +47,7 @@ Not so bad. Swift certainly removes some of the verbose syntax and obliterates t
 
 This is pretty subtle, yet important detail in using Swift. The standard library types like `String` and `Array` are NOT the same thing as `NSString` or `NSArray`. Swift is designed as a stand alone language from the Cocoa runtime, so these types don't directly relate. The kids at Apple didn't leave us hanging though, and created some automatic logic to properly bridge these types.
 
-```go
+```swift
 var str = "stuff,something,else,content,blah"
 let array = str.componentsSeparatedByString(",");
 for val in array {
@@ -57,7 +57,7 @@ for val in array {
 
 Let's break this down. `str` is a standard Swift `String`, but `componentsSeparatedByString` is a `NSString` method. This works find though, because the smart folks at Apple made a bridge from Objective-C, so the `componentsSeparatedByString` returns an `Array` instead of a `NSArray`. This is super handy, but isn't perfect. There are some types that just can't bridge quite yet, like a `String` to a `CFString`.
 
-```go
+```swift
 //have to create an NSString object, then pass it to CFURLCreateStringByAddingPercentEscapes, as it expects a CFString, which only bridges to a NSString currently.
 var raw: NSString = self
 var str = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,raw,"[].",":/?&=;+!@#$()',*",CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding))
@@ -65,7 +65,7 @@ var str = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,raw,"[].",
 
 As the comment outlines, we have to explicitly create a NSString object, instead of letting it be bridged. Swift can't handle this yet, but my hope is that this will be resolved in a future seed or have a pure Swift implementation. Also, to be clear:
 
-```go
+```swift
 var nsStr: NSString = "this is an NSString"
 println("an NSString: \(nsStr)")
 ```
@@ -75,7 +75,7 @@ Adding a `:Type` will explicitly set the variable's type, in case the inferred t
 
 **Generics**
 
-```go
+```swift
 var collect = Array<String>()
 var dict = Dictionary<String,AnyObject>()
 collect[0] = "hello"
@@ -96,7 +96,7 @@ Generics are a fairly common pattern in most languages, so I will not elaborate 
 
 Functions in Swift are much like functions in Go.
 
-```go
+```swift
 func doWork(parameters: Dictionary<String,AnyObject>, name: String) -> (String,String) {
 //do stuff
 }
@@ -108,7 +108,7 @@ Yeah, so this is way different then what we are use to, but it makes a lot of se
 
 Closures are pretty close to what Objective-C people know as blocks. There is some different syntax as it is a Swift function versus a block.
 
-```go
+```swift
 func run(parameters: Dictionary<String,AnyObject>!, success:((AnyObject?) -> Void)!, failure:((NSError) -> Void)!) {
 //do stuff
 }
@@ -124,7 +124,7 @@ task.run(nil,{(response: AnyObject?) -> Void in
 
 That is some closure joy right there. The second parameter declared `((AnyObject?) -> Void)!` is the success closure, which is the same as a block that would be called when the method completed successfully. This syntax means we expect AnyObject as the parameter type and the return type to be void. We call this method with some interesting syntax:
 
-```go
+```swift
 {(response: AnyObject?) -> Void in
   println("success")
 }
