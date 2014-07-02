@@ -7,11 +7,11 @@ summary: "Our journey through the documentation now lands us on the Builtin pack
 tags: Go, golang, packages, pkg, builtin, c, compiler
 ---
 
-Ah, builtin in types and functions. They are what makes data computations go around in most languages and golang is in no different. The builtin package is not so much a "package" as it is documentation for Go's different identifiers. You this by the fact you don't have to import the builtin package to have access to all the types and functions list in the docs. Since there is much to cover in this package, let's talk a bit about how golang exactly implements these builtin types. For those who have been through the golang source you will notice that the builtin package directory only has the one go file for documentation. If you are curious like me, you might be wondering where these types and functions are hiding out in the golang source. In a very anticlimactic turn of events, it was "builtin" (who would have figured?) to the golang compiler, `gc`. Alright, time for my usual disclaimer from here. I tend to think of this meme when I get ready to science:
+Ah, builtin in types and functions. They are what makes data computations go around in most languages and golang is no different. The builtin package is not so much a "package" as it is documentation for Go's different identifiers. You may have noticed this by the fact you don't have to import the builtin package to have access to all the types and functions list in the docs. Since there is much to cover in this package, let's talk a bit about how golang exactly implements these builtin types. For those who have been through the golang source, you will notice that the builtin package directory only has the one go file for documentation. If you are curious like me, you might be wondering where these types and functions are hiding out in the golang source. In a very anticlimactic turn of events, it was "builtin" (who would have figured?) to the golang compiler, `gc`. Alright, time for my usual disclaimer here. I tend to think of this meme when I get ready to science:
 
 ![](http://thumbpress.com/wp-content/uploads/2013/05/I-Have-No-Idea-What-Im-Doing-1.jpg)
 
-I'm by no means a compiler expert (although I would like to be!) so don't take my finding as gospel. Without that out of the way, let's dig in. If peak at the source and take a look at cmd instead of the package directory we notice a bunch of seemingly randomly named folder along with some familiar ones such as `cgo`, `go`, `gofmt` and `gc`. I tend to like to look for docs when I get started and long behold, pretty much every directory had one. The seemingly random named folders are actually the linkers for the different OS architectures. The rest of the directories are array of tools that we won't get into right now. If we turn our attention back to `gc`. If we look at the docs here we notice that `gc` is in fact a modified version of the Plan 9 compiler. If open up the reference PDFs we notice the authors include Rob Pike and Ken Thompson, both core contributors to golang, hence the modified Plan 9 compiler. Both PDFs are pretty high level and about the original C compiler, but are interesting reads none the less. Normally my next would be to just to read through the source, but since there is quite a bit, I figured I would turn to the Internet to see if I could find any pointers. Always wanting to give credit where credit is due, I found a stackoverflow post that had just what I was looking for. The link to it is at the end of the article. Instead of make like the SO post, let's take a look at the `append` function.
+I'm by no means a compiler expert (although I would like to be!) so don't take my finding as gospel. Without that out of the way, let's dig in. If you peak at the source and take a look at cmd instead of the package directory, we notice a bunch of seemingly randomly named folder along with some familiar ones such as `cgo`, `go`, `gofmt` and `gc`. I tend to like to look for docs when I get started and long behold, pretty much every directory had one. The seemingly random named folders are actually the linkers for the different OS architectures. The rest of the directories are array of tools that we won't get into right now. If we turn our attention back to `gc`, we notice that `gc` is in fact a modified version of the Plan 9 compiler. When we open up the referenced PDFs, we notice the authors include Rob Pike and Ken Thompson, both core contributors to golang, hence the use of a modified Plan 9 compiler. Both PDFs are pretty high level and about the original C compiler, but are interesting reads none the less. Normally my next would be to just to read through the source, but since there is quite a bit, I figured I would turn to the Internet to see if I could find any pointers. Always wanting to give credit where credit is due, I found a stackoverflow post that had just what I was looking for. The link to it is at the end of the article. Instead of a `make` like the SO post, let's take a look at the `append` function.
 
 ```cpp
 
@@ -72,7 +72,7 @@ I'm by no means a compiler expert (although I would like to be!) so don't take m
     goto ret;
 ```
 
-The above code is a chunk from `gc` `typecheck.c`. This simply does some type checking and does the symbol substitution of the Go `append` method into the OAPPEND symbol for `gc`. Once the symbol replacement is replaced and got through the type checking the appropriate runtime function is called for the OAPPEND symbol. If we take a look at `walk.c` in `gc`.
+The above code is a chunk from `gc` `typecheck.c`. This simply does some type checking and does the symbol substitution of the Go `append` method into the OAPPEND symbol for `gc`. Once the symbol replacement is replaced and gets through the type checking, the appropriate runtime function is called for the OAPPEND symbol. Next we take a look at `walk.c` in `gc`.
 
 ```cpp
 
@@ -84,7 +84,7 @@ The above code is a chunk from `gc` `typecheck.c`. This simply does some type ch
     goto ret;
 ```
 
-Here we see the `appendslice` or `append` function being called. Instead of digging into the `appendslice` or `append` (There a ton of C source that would take forever to get through. Beside this is a golang series!) we can look at the comment see what these function "expand" into. Let's do `appendslice`:
+Here we see the `appendslice` or `append` function being called. Instead of digging into the `appendslice` or `append` (There a ton of C source that would take forever to get through and this is a golang series!) we can look at the comment to see what these function "expand" into. Let's do `appendslice`:
 
 ```cpp
 // expand append(l1, l2...) to
@@ -121,7 +121,7 @@ Then `append`:
 //   s
 ```
 
-Not too bad. Overall compiler design and features is endless vortex of awesome computer science nerdiness that I could get lost in for hours, but for both our sakes I will wrap it up here. The end take away here is that these types and functions are actually implemented in the actual golang compiler, hence there documentation being in a perfectly named package of "builtin". As always, any questions, comments, and additions are welcomed.
+Not too bad. Overall compiler design and features is endless vortex of awesome computer science nerdiness that I could get lost in for hours, but for both our sakes I will wrap it up here. The end take away here is that these types and functions are actually implemented in the actual golang compiler, hence there documentation being perfectly named package of "builtin". As always, any questions, comments, and additions are welcomed.
 
 [SO Post](http://stackoverflow.com/questions/18512781/built-in-source-code-location)
 
