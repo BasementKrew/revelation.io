@@ -150,7 +150,7 @@ The example is quite short, clocking in at just under a 130 lines of source. Eve
 
 Well, that about wraps up our article on the archive package. As with all example code, there is plenty of room for improvement to make it "production" worthy, but my hope is you can see how easy archiving files in Go can be. We recently just had to do some archiving (or un-archiving in our case) in an iOS, which turned out having to be done mostly in C and was not nearly as easy or straight forward as the Go program above. As always, questions, comments, ugly code induced rage, atta-boys and pats on the back are welcomed.
 
-[Twitter](https://twitter.com/AC_Macalister)
+[Twitter](https://twitter.com/acmacalister)
 
 [Golang Book](http://www.golang-book.com)
 

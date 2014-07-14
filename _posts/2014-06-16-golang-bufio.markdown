@@ -151,6 +151,6 @@ func bufferFiles(input, output string) {
 
 As we can see, not much going on here. It takes an input file to read from as the first argument and then writes it out to the other filename we passed in as the second argument, chunk by chunk. The bufio package also contains a few other convenience methods for reading buffered data, but since the docs are excellent and have good example programs for that, I will leave you to explore those on your own. Buffering for the most part is a pretty simple and has been discussed since before I was born, so I won't belabor it anymore. Since this was such a simple package and I got sidetracked looking at the os and syscall packages, I have a great treat. Another article this week that covers both the os and syscall packages (check it out [here](os-syscall.html))! As always, questions, comments, hobbies and interests are welcomed.
 
-[Twitter](https://twitter.com/AC_Macalister)
+[Twitter](https://twitter.com/acmacalister)
 
 [bufio](http://golang.org/pkg/bufio/)

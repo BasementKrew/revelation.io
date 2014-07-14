@@ -131,4 +131,4 @@ With that, we should have a nice little intro to ElasticSearch. Again I am not a
 
 [Gist](https://gist.github.com/austiniam/9897280)
 
-[Twitter](https://twitter.com/AC_Macalister)
+[Twitter](https://twitter.com/acmacalister)

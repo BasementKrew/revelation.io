@@ -102,7 +102,7 @@ Mhh, this method doesn't appear to do much. The big part appears to be the Sysca
 
 If we go any lower we will be looking at darwin kernel source, which we probably want to save for a different article :). Questions, comments, corrections and tales of heroism welcomed.
 
-[Twitter](https://twitter.com/AC_Macalister)
+[Twitter](https://twitter.com/acmacalister)
 
 [os](http://golang.org/pkg/os/)
 

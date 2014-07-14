@@ -195,4 +195,4 @@ As we can see the Go code looks a lot like our Java code. It has interfaces for 
 
 [More on Go Interfaces](http://jordanorelli.com/post/32665860244/how-to-use-interfaces-in-go)
 
-With that, we end our little journey through interfaces. As always feel free to hit me up on [Twitter](https://twitter.com/AC_Macalister)
+With that, we end our little journey through interfaces. As always feel free to hit me up on [Twitter](https://twitter.com/acmacalister)
