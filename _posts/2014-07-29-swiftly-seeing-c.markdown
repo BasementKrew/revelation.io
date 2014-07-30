@@ -3,16 +3,16 @@ layout: post
 title:  "Swiftly Seeing C"
 date:   2014-07-29 10:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-summary: "This week we dig into some C and Core Foundation tips in Swift"
+summary: "This week we dig into some C and Core Foundation tips in Swift."
 tags: Objective-C, objc, apple, cocoa, websocket, osx, ios, swift, C, Core Foundation
 ---
 
-After the break of last week (vacations are fun!), we pick right back on our Swift adventures. Last time we covered [websockets](working-with-websockets.html) and the latest addition to the open source family [jetfire](https://github.com/acmacalister/jetfire). Now that the Objective-C version is finished, I felt the best way to learn about C and Core Foundation was to port [jetfire](https://github.com/acmacalister/jetfire) to Swift. This library is appropriately named [starscream](https://github.com/daltoniam/starscream). Alright enough self promotion, onward to the examples!
+After last week's break (vacations are fun!), we pick right back up on our Swift adventures. Last time we covered [websockets](working-with-websockets.html) and the latest addition to the open source family, [jetfire](https://github.com/acmacalister/jetfire). Now that the Objective-C version is finished, I felt the best way to learn about C and Core Foundation in Swift was to port [jetfire](https://github.com/acmacalister/jetfire). This new Swift version is appropriately named [starscream](https://github.com/daltoniam/starscream). Alright enough self promotion, onward to the examples!
 
 
 **Bytes and NSData**
 
-A common aspect of working with sockets is the manipulation of raw socket data or the bytes of `NSData`. Swift and Objective-C vary a bit on how you interact with the underlining bytes of a `NSData` object. Objective-C uses its C roots and resorts to a simple typecast to work with the bytes by returning the bytes as a `void` pointer. Swift on the other hand does not like such loose programming as requires a bit more finesse to make this work. 
+A common aspect of working with sockets is the manipulation of raw socket data or the bytes of `NSData`. Swift and Objective-C vary a bit on how you interact with the underlining bytes of a `NSData` object. Objective-C uses its C roots and resorts to a simple typecast to work with the bytes by returning the bytes as a `void` pointer. Swift on the other hand, does not like such loose programming and requires a bit more finesse to make this work.
 
 Objective-C:
 
@@ -22,64 +22,64 @@ uint8_t *buffer = (uint8_t*)[data bytes];
 //do stuff with buffer...
 ```
 
-Swift: 
+Swift:
 
 ```swift
 let data = NSData() //for the sake of an example, pretend some data is in this...
 let bytes = UnsafePointer<UInt8>(data.bytes)
-//do stuff with buffer...
+//do stuff with bytes...
 ```
 
-That wasn't so bad. The biggest difference is the need to be explicit in the usage of the bytes. Since `void` pointers and C casting don't exist in Swift, the use of `UnsafePointer` is how C bytes buffers are interacted with.
+That wasn't so bad. The biggest difference is the need to be explicit in the usage of the bytes. Since `void` pointers and C cast don't exist in Swift, the use of `UnsafePointer` is how C bytes buffers are accessed in Swift.
 
 **Core Foundation Bridging**
 
-Core Foundation methods are an interesting bit in Swift. I believe that the plan would be to completely abstract the need to interact with these method directly in the long run, but many frameworks are still very much C frameworks (with good reason) and still required to get more custom work done. With that in mind, there is still ways to interact with these methods in Swift, but the bridging isn't quite as smooth as in Objective-C. Examples incoming:
+Core Foundation methods are an interesting bit in Swift. I believe that the plan would be to completely abstract the need to interact with these method directly in the long run, but many frameworks are still very much C frameworks (with good reason) and still required to get more custom work done. With that in mind, there are still ways to interact with these methods in Swift, but the bridging isn't quite as smooth as in Objective-C. Examples incoming:
 
 Objective-C:
 
 ```objc
 CFURLRef url = CFURLCreateWithString(kCFAllocatorDefault, (CFStringRef)self.url.absoluteString, NULL);
-    CFStringRef requestMethod = CFSTR("GET");
-    CFHTTPMessageRef urlRequest = CFHTTPMessageCreateRequest(kCFAllocatorDefault,
-                                                             requestMethod,
-                                                             url,
-                                                             kCFHTTPVersion1_1);
-    CFHTTPMessageSetHeaderFieldValue(urlRequest,
-                                     (__bridge CFStringRef)headerWSUpgradeName,
-                                     (__bridge CFStringRef)headerWSUpgradeValue);
-    CFHTTPMessageSetHeaderFieldValue(urlRequest,
-                                     (__bridge CFStringRef)headerWSConnectionName,
-                                     (__bridge CFStringRef)headerWSConnectionValue);
-    CFHTTPMessageSetHeaderFieldValue(urlRequest,
-                                     (__bridge CFStringRef)headerWSProtocolName,
-                                     (__bridge CFStringRef)headerWSProtocolValue);
-    CFHTTPMessageSetHeaderFieldValue(urlRequest,
-                                     (__bridge CFStringRef)headerWSVersionName,
-                                     (__bridge CFStringRef)headerWSVersionValue);
-    CFHTTPMessageSetHeaderFieldValue(urlRequest,
-                                     (__bridge CFStringRef)headerWSKeyName,
-                                     (__bridge CFStringRef)[self generateWebSocketKey]);
-    CFHTTPMessageSetHeaderFieldValue(urlRequest,
-                                     (__bridge CFStringRef)headerOriginName,
-                                     (__bridge CFStringRef)self.url.absoluteString);
-    CFHTTPMessageSetHeaderFieldValue(urlRequest,
-                                     (__bridge CFStringRef)headerWSHostName,
-                                     (__bridge CFStringRef)[NSString stringWithFormat:@"%@:%@",self.url.host,self.url.port]);
-    
-    NSData *serializedRequest = (__bridge NSData *)(CFHTTPMessageCopySerializedMessage(urlRequest));
+CFStringRef requestMethod = CFSTR("GET");
+CFHTTPMessageRef urlRequest = CFHTTPMessageCreateRequest(kCFAllocatorDefault,
+                                                         requestMethod,
+                                                         url,
+                                                         kCFHTTPVersion1_1);
+CFHTTPMessageSetHeaderFieldValue(urlRequest,
+                                 (__bridge CFStringRef)headerWSUpgradeName,
+                                 (__bridge CFStringRef)headerWSUpgradeValue);
+CFHTTPMessageSetHeaderFieldValue(urlRequest,
+                                 (__bridge CFStringRef)headerWSConnectionName,
+                                 (__bridge CFStringRef)headerWSConnectionValue);
+CFHTTPMessageSetHeaderFieldValue(urlRequest,
+                                 (__bridge CFStringRef)headerWSProtocolName,
+                                 (__bridge CFStringRef)headerWSProtocolValue);
+CFHTTPMessageSetHeaderFieldValue(urlRequest,
+                                 (__bridge CFStringRef)headerWSVersionName,
+                                 (__bridge CFStringRef)headerWSVersionValue);
+CFHTTPMessageSetHeaderFieldValue(urlRequest,
+                                 (__bridge CFStringRef)headerWSKeyName,
+                                 (__bridge CFStringRef)[self generateWebSocketKey]);
+CFHTTPMessageSetHeaderFieldValue(urlRequest,
+                                 (__bridge CFStringRef)headerOriginName,
+                                 (__bridge CFStringRef)self.url.absoluteString);
+CFHTTPMessageSetHeaderFieldValue(urlRequest,
+                                 (__bridge CFStringRef)headerWSHostName,
+                                 (__bridge CFStringRef)[NSString stringWithFormat:@"%@:%@",self.url.host,self.url.port]);
+
+NSData *serializedRequest = (__bridge NSData *)(CFHTTPMessageCopySerializedMessage(urlRequest));
 ```
 
-Swift: 
+Swift:
 
 ```swift
 func createHTTPRequest() {
-    
+
     let str: NSString = _url.absoluteString
     let url = CFURLCreateWithString(kCFAllocatorDefault, str, nil)
     let urlRequest = CFHTTPMessageCreateRequest(kCFAllocatorDefault, "GET",
         url, kCFHTTPVersion1_1)
-    
+
     self.addHeader(urlRequest, key: headerWSUpgradeName, val: headerWSUpgradeValue)
     self.addHeader(urlRequest, key: headerWSConnectionName, val: headerWSConnectionValue)
     self.addHeader(urlRequest, key: headerWSProtocolName, val: headerWSProtocolValue)
@@ -87,7 +87,7 @@ func createHTTPRequest() {
     self.addHeader(urlRequest, key: headerWSKeyName, val: self.generateWebSocketKey())
     self.addHeader(urlRequest, key: headerOriginName, val: _url.absoluteString)
     self.addHeader(urlRequest, key: headerWSHostName, val: "\(_url.host):\(_url.port)")
-    
+
     let serializedRequest: NSData = CFHTTPMessageCopySerializedMessage(urlRequest.takeUnretainedValue()).takeUnretainedValue()
     self.initStreamsWithData(serializedRequest)
 }
@@ -107,13 +107,13 @@ This is also the case with other Core Foundation objects such as the `CFData` to
 
 **Single Character Constants**
 
-This is a bit arbitrary , but I think it is worth share. Swift does not allow single `char` constants. By that I mean you can't do this `'a'` or `'\n'` anymore. The only way this can be accomplished is like so: `UInt8("a")` or `UInt8("\n")`. Not the end of the world, but threw me at first as that is yet another common C expression I didn't realized didn't make the jump to Swift.
+This is a bit arbitrary , but I think it is worth sharing. Swift does not allow single `char` literals. By that I mean you can't do the `'a'` or `'\n'` anymore. The only way I found this can be accomplished is like so: `UInt8("a")` or `UInt8("\n")`. Not the end of the world, but it threw me at first as that is yet another common C expression I didn't realized didn't make the jump to Swift.
 
 **The End**
 
-There is certainly more to cover with Core Foundation and Swift and some of this may change in the next few releases before xCode 6 becomes Golden Master, but my hope is this article obliterates some the time investment in starting with C and Core Foundation in Swift. Not to continue on a cycle of self promotion, but I am not aware of another library that is both in Swift and Objective-C to compare and contrast, [jetfire](https://github.com/acmacalister/jetfire) and [starscream](https://github.com/daltoniam/starscream) is a good way to see (or what I have figured out so far) the transition of Core Foundation from Objective-C to Swift. Any other libraries that also demonstrates, please don't hesitate to share (nobody likes a hoarder!!!). As always, questions, comments, feedback, and random rants are appreciated.
+There is certainly more to cover with Core Foundation and Swift and some of this may change in the next few releases before Xcode 6 becomes Golden Master, but my hope is this article obliterates some the time investment in starting with C and Core Foundation in Swift. Not to continue on a cycle of self promotion, but I am not aware of any other libraries that that are in both Swift and Objective-C to compare and contrast, so I could recommend you take a look at [jetfire](https://github.com/acmacalister/jetfire) and [starscream](https://github.com/daltoniam/starscream). They are good way to see (or what I have figured out so far) the transition of Core Foundation from Objective-C to Swift. Any other libraries that also demonstrates using C and Core Foundation, please don't hesitate to share (nobody likes a hoarder!!!). As always, questions, comments, feedback, and random rants are appreciated.
 
-[Twitter](https://twitter.com/daltoniam) 
+[Twitter](https://twitter.com/daltoniam)
 
 [jetfire](https://github.com/acmacalister/jetfire)
 
