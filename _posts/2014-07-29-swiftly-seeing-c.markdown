@@ -119,3 +119,5 @@ There is certainly more to cover with Core Foundation and Swift and some of this
 
 [starscream](https://github.com/daltoniam/starscream)
 
+[Swift Docs](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/buildingcocoaapps/InteractingWithCAPIs.html)
+
