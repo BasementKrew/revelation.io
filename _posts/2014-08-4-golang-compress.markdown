@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "Gopher Go! - Compress"
-date:   2014-07-14 08:00:00
+date:   2014-08-04 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-summary: "This week in our golang series we will be taking a look at the bytes and strings packages."
+summary: "This week in our golang series we will be taking a look at the compress package."
 tags: Go, golang, packages, pkg, compress, compression, bzip2, flate, gzip, lzw, zlib
 ---
 
@@ -112,7 +112,7 @@ func printUsage() {
 }
 ```
 
-Just like that we are compressing and decompressing files! Throw that together with the tar and zip example from our [archive](golang-archive.html) article and you can replace a whole slew of command line utilities! As always, any thoughts or comments are appreciated.
+Just like that we are decompressing files! Throw that together with the tar and zip example from our [archive](golang-archive.html) article and you can replace a whole slew of command line utilities! As always, any thoughts or comments are appreciated.
 
 [LZW](http://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch)
 
