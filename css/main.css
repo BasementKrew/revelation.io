@@ -19,20 +19,88 @@
   -moz-background-size: cover;
   -ms-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
-}
+  background-size: cover; }
 
 .block {
-  display: block;
-  position: relative;
+display: block;
+position: relative;
 }
-
-.block__inner,
-.footer__inner {
+.mainHeroText {
+  font-size: 124px;
+}
+.secondHeroText {
+  font-size: 40px;
+  margin-top: 20px;
+}
+.heroTextBlock {
   position: relative;
-  max-width: 1280px;
-  margin: 0 auto;
-  z-index: 10;
+  top: 350px;
+}
+.mainSectionContainer {
+  background-color: #FFF;
+}
+.mainHeader {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 60px;
+  font-weight: bold;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mainBreak {
+  margin-bottom: 30px;
+}
+.redColor {
+  color:#e31431;
+}
+.greenColor {
+  color:#25be53;
+}
+.blueColor {
+  color:#0095d4;
+}
+.yellowColor {
+  color:#fddd2c;
+}
+.purpleColor {
+  color:#83439f;
+}
+.whiteColor {
+  color:#FFF;
+}
+.graybg {
+  /*background-color: #DFDFDF;*/
+  background-color: #F6F5F3;
+}
+.redbg {
+  background-color: #e31431;
+}
+.bluebg {
+  background-color: #0095d4;
+}
+.centerContent {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.icon {
+  height: 200px;
+  width: 200px;
+  color: #000;
+}
+.footer {
+  background-color: #1f1f1f;
+  height: 400px; /* temp */
+}
+.dividerLine {
+  height: 2px;
+}
+.teampic {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  background-size: auto;
 }
 
 @media only screen and (min-width: 1024px) {
