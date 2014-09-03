@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Gopher Go! - Crypto"
-date:   2014-08-11 08:00:00
+date:   2014-09-01 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
 summary: "Cryptography has made significant advances with the rise of modern computing. In today's golang article we are going to take a peek at a couple of Go crypto packages."
 tags: Go, golang, packages, pkg, crypto
@@ -22,36 +22,85 @@ import (
   _ "github.com/go-sql-driver/mysql"
   "log"
   "net/http"
+  "time"
 )
 
+// Contains our sql connection.
 type DBHandler struct {
   db *sql.DB
 }
 
 func main() {
-  db, err := sql.Open("mysql", "root@/mobile_lsfilter_dev")
+  // Open SQL connection to db.
+  db, err := sql.Open("mysql", "root@/tester")
   if err != nil {
     log.Fatal(err)
   }
   defer db.Close()
+
+  // Pass it to the handler.
   h := DBHandler{db: db}
 
-  http.HandleFunc("/", h.HomeHandler)
+  // A couple HTTP routes.
+  http.HandleFunc("/create", h.CreateHandler)
+  http.HandleFunc("/auth", h.AuthHandler)
   http.ListenAndServe(":8081", nil)
 }
 
-func (h *DBHandler) HomeHandler(rw http.ResponseWriter, req *http.Request) {
-  name := "dalton"
-  password := []byte("test")
+func (h *DBHandler) CreateHandler(rw http.ResponseWriter, req *http.Request) {
+  // Get the form values out of the POST request.
+  name := req.FormValue("name")
+  password := req.FormValue("password")
+
+  // Generate a hashed password from bcrypt.
+  hashedPass, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  // Stick that in our users table of our db.
+  _, err = h.db.Query("INSERT INTO users (name, password_digest, created_at, updated_at) VALUES(?,?,?,?)",
+    name, hashedPass, time.Now(), time.Now())
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  // Write a silly message back to the client.
+  rw.Write([]byte("Created user!"))
+}
+
+func (h *DBHandler) AuthHandler(rw http.ResponseWriter, req *http.Request) {
+  // Get the form values out of the POST request.
+  name := req.FormValue("name")
+  password := req.FormValue("password")
+
+  // Find the user by his name and get the password_digest we generated in the create method out.
   var digest string
   if err := h.db.QueryRow("SELECT password_digest FROM users WHERE name = ?", name).Scan(&digest); err != nil {
     log.Fatal(err)
   }
 
-  if err := bcrypt.CompareHashAndPassword([]byte(digest), password); err != nil {
+  // Compare that password_digest to our password we got from the form value.
+  // If the error is not equal to nil, we know the auth failed. If there is no error, it
+  // was successful.
+  if err := bcrypt.CompareHashAndPassword([]byte(digest), []byte(password)); err != nil {
     rw.Write([]byte("auth failure..."))
   } else {
     rw.Write([]byte("auth successful!"))
   }
 }
 ```
+
+Reading the comments, it is pretty clear what is going on with this code. Just for completeness, I believe a high level description is in order. We setup two routes, one for creating a new user and the other for authenticating them. If we do an HTTP POST to the create route it will add a user, with a hashed password from bcrypt. The auth route will check the user and password we posted and see if they match for that user and write a message back depending on if the password is correct. Of course this is a simple little example of how you can use Go's crypto libraries. I also did a little work with ssh package if want to check that out that project out on Github (link below). With that I will bid a farewell. As always, any questions, comments, or criticisms are welcomed.
+
+[SSH Example](https://github.com/acmacalister/kirk)
+
+[Crypto Package](http://golang.org/pkg/crypto/)
+
+[go.crypto](http://godoc.org/code.google.com/p/go.crypto)
+
+[bcrypt](http://godoc.org/code.google.com/p/go.crypto/bcrypt)
+
+[has\_secure\_password](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/InstanceMethodsOnActivation.html)
+
+[Twitter](https://twitter.com/acmacalister)
