@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "SwiftHTTP"
-date:   2014-09-09 10:00:00
+date:   2014-09-11 10:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
 summary: "The thoughts and workings of the SwiftHTTP library."
 tags: apple, osx, ios, swift, http, wwdc, http, swifthttp
