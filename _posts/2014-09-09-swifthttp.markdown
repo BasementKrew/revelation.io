@@ -34,6 +34,7 @@ func main() {
 ```
 
 Now for the HTTPTask.
+
 ```swift
 var request = HTTPTask()
 request.requestSerializer = HTTPRequestSerializer()
@@ -47,6 +48,7 @@ request.GET("http://localhost:8080/bar", parameters: ["param": "param1", "array"
         println("got an error: \(error)")
 })
 ```
+
 A lot to cover in the small amount of code, so let's jump in.
 
 **HTTP Verbs**
@@ -66,7 +68,7 @@ public enum HTTPMethod: String {
 There also built in convenience methods with the verb names that they preform. See `Operation Queues` below for more information.
 
 **requestSerializer**
-The requestSerializer is responsible for all the settings of the request. This includes request headers, how parameters are serialized, and standard NSURLRequest settings like `cachePolicy`. All requestSerializers are a subclass of `HTTPRequestSerializer` and if a requestSerializer isn't specified, `HTTPRequestSerializer` is used. Here is some common examples:
+The requestSerializer is responsible for all the settings of a HTTP request. This includes request headers, how parameters are serialized, and standard NSURLRequest settings like `cachePolicy` and so forth. All requestSerializers are a subclass of `HTTPRequestSerializer` and is the default if one isn't specified. Here are some common examples of how to use a requestSerializer:
 
 Set a header:
 
@@ -91,7 +93,6 @@ The default `HTTPRequestSerializer` serializes the parameters according to the H
 ```
 param=hi&something=else&key=value
 ```
-It also supports the multi form spec for file upload.
 
 This fully supports Arrays, Dictionaries, Strings, and Ints. There is also an included `JSONRequestSerializer` that can be used if the parameters need to be embed in the HTTP body as JSON. The output would look like so:
 
@@ -100,7 +101,7 @@ This fully supports Arrays, Dictionaries, Strings, and Ints. There is also an in
 ```
 
 **responseSerializer**
-The responseSerializer is responsible for object that is returned for `responseObject`. This means we can make a request return a serialized object instead of just returning a `NSData` object. SwiftHTTP includes `JSONResponseSerializer` that will serialize the response into a `Foundationn` object using `NSJSONSerialization`.
+The responseSerializer is responsible for object serialization that is returned in the HTTP response as `responseObject`. In practice, this means we can make a request return a serialized object instead of just returning a `NSData` object. SwiftHTTP includes `JSONResponseSerializer` that will serialize the response into a `Foundation` object using `NSJSONSerialization`.
 
 ```swift
 var request = HTTPTask()
@@ -113,16 +114,17 @@ request.GET("http://localhost:8080/bar", parameters: nil, success: {(response: H
     }, failure: {(error: NSError) -> Void in
         println("got an error: \(error)")
 })
-``` 
-Custom subclasses can be created for `responseSerializer`. Examples of this could be an image serializer or an XML one. If a `responseSerializer` isn't specified, then a `NSData` of the response is returned. 
+```
+
+In addition to the `JSONResponseSerializer` custom subclasses can be created for `responseSerializer`. Some good examples of this could be an image or XML serializer. If a `responseSerializer` isn't specified, then a `NSData` of the response is returned.
 
 **HTTPResponse**
 
-The `HTTPResponse` objects represents the values of an HTTP response. This includes the `statusCode`, `mimeType`, and `responseObject`. The `responseObject` is of type `AnyObject` as a `responseSerializer` can convert this into the proper object representation of the data. If a `responseSerializer` isn't specified, then a `NSData` for the `responseObject` is returned. 
+The `HTTPResponse` objects represents the values of an HTTP response. This includes the `statusCode`, `mimeType`, and `responseObject`. The `responseObject` is of type `AnyObject` so a `responseSerializer` can convert this into the proper object representation of the data.
 
 **Files**
 
-To upload a file with a request, simply use the `HTTPUpload` object. This object takes either a file url or an `NSData` blob and mimeType. The request is then sent as a [multipart/form-data](https://www.ietf.org/rfc/rfc2388.txt) request.
+To upload a file with a request, simply use the `HTTPUpload` object. This object takes either a file url or an `NSData` blob and mimeType. The request is then sent as a [multipart/form-data](https://www.ietf.org/rfc/rfc1867.txt) request.
 
 ```swift
 let fileUrl = NSURL.fileURLWithPath("/Users/dalton/Desktop/file")
@@ -136,7 +138,7 @@ request.POST("http://domain.com/1/upload", parameters:  ["param": "hi", "somethi
 
 **Operation Queues**
 
-One of the powerful features of SwiftHTTP is the `NSOperation` support. Every `HTTPTask` creates `HTTPOperations`, which makes working with `NSOperationQueue` very simple.
+One of the most powerful features of SwiftHTTP is the `NSOperation` support. Every `HTTPTask` creates `HTTPOperations`, which makes working with `NSOperationQueue` very simple.
 
 ```swift
 //create an queue.
@@ -160,7 +162,8 @@ if opt != nil {
     operationQueue.addOperation(opt!)
 }
 ```
-The example shows how easy it is to use an `NSOperationQueue` with SwiftHTTP. It is important to note that the convenience methods (GET,POST,PUT,etc) all call the create method and start the operation. 
+
+The example shows how easy it is to use an `NSOperationQueue` with SwiftHTTP. It is important to note that the convenience methods (GET,POST,PUT,etc) all call the create method shown and start the operation all on their own as seen below.
 
 ```swift
 //pulled this directly from the HTTPTask class.
@@ -170,12 +173,13 @@ public func GET(url: String, parameters: Dictionary<String,AnyObject>?, success:
             opt!.start()
         }
     }
-``` 
-These methods are designed to be for convenience, so to work with operation queues, you need to use the `create` method.
+```
+
+Again these methods are designed to be for convenience, so to work with your own operation queues, you need to use the `create` method.
 
 **BaseURL and APIs**
 
-SwiftHTTP also simplifies API interaction. Simply set the `baseURL` property and reuse the same HTTPTask object. All request will append the `baseURL` to the url requested.
+SwiftHTTP can also be used to simplify API interaction. To do this, simply set the `baseURL` property and reuse the same HTTPTask object. All request will append the `baseURL` to the url requested.
 
 ```swift
 var request = HTTPTask()
@@ -189,7 +193,7 @@ request.GET("/users", parameters: ["key": "value"], success: {(response: HTTPRes
 request.POST("/users", parameters: ["key": "updatedVale"], success: {(response: HTTPResponse) -> Void in
     println("Got data from http://api.someserver.com/1/users")
     },failure: {(error: NSError) -> Void in
-  
+
     })
 
 request.GET("/resources", parameters: ["key": "value"], success: {(response: HTTPResponse) -> Void in
@@ -203,7 +207,7 @@ This could also be combined with the operation queue functionally to provided qu
 
 **Closing**
 
-The rapidly changing landscape of Cocoa development is certainly an exiting one. The opportunity to learn, try, and develop new things has always been a major reason I love programming and the release of Swift 1.0 is no exception. That all being said, this article will be a "living" article as changes and improvements are made to SwiftHTTP. As always, comments, thoughts, kudos, and random rants are appreciated. 
+The rapidly changing landscape of Cocoa development is certainly an exciting one. The opportunity to learn, try, and develop new things has always been a major reason I love programming and the release of Swift 1.0 is no exception. That all being said, this article will be a "living" article as changes and improvements are made to SwiftHTTP. As always, comments, thoughts, kudos, and random rants are appreciated.
 
 [Twitter](https://twitter.com/daltoniam)
 
