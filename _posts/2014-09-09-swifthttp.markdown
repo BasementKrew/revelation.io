@@ -100,6 +100,25 @@ This fully supports Arrays, Dictionaries, Strings, and Ints. There is also an in
 {"key":"value","something":"else","param":"hi"}
 ```
 
+Also an important note is that if a variable is used for the parameters, the type must be explicitly set.
+
+```swift
+//WRONG, will not build
+//let params = ["param": "param1", "array": ["first array element","second","third"], "num": 23, "dict": ["someKey": "someVal"]]
+
+//we have to add the explicit type, else the wrong type is inferred 
+let params: Dictionary<String,AnyObject> = ["param": "param1", "array": ["first array element","second","third"], "num": 23, "dict": ["someKey": "someVal"]]
+
+var request = HTTPTask()
+request.POST("http://domain.com/create", parameters: params, success: {(response: HTTPResponse) -> Void in
+
+    },failure: {(error: NSError) -> Void in
+
+    })
+```
+
+This is an issue with the Swift type inference inferring the wrong type, so explicitly setting is required.
+
 **responseSerializer**
 The responseSerializer is responsible for object serialization that is returned in the HTTP response as `responseObject`. In practice, this means we can make a request return a serialized object instead of just returning a `NSData` object. SwiftHTTP includes `JSONResponseSerializer` that will serialize the response into a `Foundation` object using `NSJSONSerialization`.
 
