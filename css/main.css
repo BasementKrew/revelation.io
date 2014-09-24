@@ -7,6 +7,9 @@
 
 /* CSS Document */
 
+.fakeFill {
+  height: 800px;
+}
 .block--hero,
 .block--heroish,
 .block--ratio,
@@ -40,9 +43,8 @@ position: relative;
   background-color: #FFF;
 }
 .mainHeader {
-  margin-top: 30px;
   margin-bottom: 30px;
-  font-size: 60px;
+  font-size: 68px;
   font-weight: bold;
   text-align: center;
   margin-left: auto;
@@ -50,6 +52,21 @@ position: relative;
 }
 .mainBreak {
   margin-bottom: 30px;
+}
+.secondTextBlock {
+  margin-bottom: 30px;
+  font-size: 30px;
+  line-height: 1.2;
+}
+.topPad {
+  margin-top: 100px;
+}
+.bottomPad {
+  margin-top: 130px;
+}
+.btnStyle {
+  margin-top: 30px;
+  font-size: 24px;
 }
 .redColor {
   color:#e31431;
@@ -69,6 +86,9 @@ position: relative;
 .whiteColor {
   color:#FFF;
 }
+.grayColor {
+  color: #969696;
+}
 .graybg {
   /*background-color: #DFDFDF;*/
   background-color: #F6F5F3;
@@ -78,6 +98,15 @@ position: relative;
 }
 .bluebg {
   background-color: #0095d4;
+}
+.purplebg {
+  background-color: #83439f;
+}
+.yellowbg {
+  background-color:#fddd2c;
+}
+.greenbg {
+  background-color:#25be53;
 }
 .centerContent {
   text-align: center;
@@ -145,8 +174,11 @@ position: relative;
   background-color: #FFF;*/
 }
 
-body {
-  font-family: 'Lato', sans-serif !important;
+body
+{
+  /*font-family: 'Lato', sans-serif;*/
+  line-height: 1.8;
+  font-size: 18px;
 }
 
 /*----- Nav -----*/
