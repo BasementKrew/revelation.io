@@ -1,18 +1,20 @@
 ---
 layout: post
-title:  "Gopher Go! - Web API"
-date:   2014-09-24 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-summary: "In this week's article we will be building an API server for our guitar store using some popular open source packages."
-tags: Go, golang, packages, pkg, net/http, http, gorm, negroni, mux, mysql, binding, render
+title:  "Swift API"
+date:   2014-09-30 10:00:00
+author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+summary: "We follow up on our article from last week by building an iOS app in Swift that interacts with our guitar store API."
+tags: apple, ios, swift, http, swifthttp, json, joy, golang, web, api, guitar, store, tutorial, skeets
 ---
 
-Instead of our regularly scheduled standard library package, (my plan was to do the database package, but there are already lots of great documentation and examples of how to use that online) we are going to change it up this week by building a simple API server for selling guitars. Let's dive in!
+Last week [Austin](http://austincherry.me) showed how to build a standard REST API in Go. This week we build off that example and implement a Swift client to interact with the API server. Let's start off by reviewing the Go API server. I won't cover this in much detail, check out [last week's article](/golang-web-api.html) to get the goods. 
 
 ```go
 package main
 
 import (
+  "code.google.com/p/go.crypto/bcrypt"
+  "encoding/hex"
   "fmt"
   "github.com/acmacalister/skittles"
   "github.com/codegangsta/negroni"
@@ -23,6 +25,7 @@ import (
   "gopkg.in/unrolled/render.v1"
   "io"
   "log"
+  "math/rand"
   "net/http"
   "os"
   "strconv"
@@ -53,6 +56,17 @@ type GuitarForm struct {
   Year  string
   Price int64
   Color string
+}
+
+//Our User to auth our people
+type User struct {
+  Id             int64     `json:"id"`
+  Name           string    `json:"name"`
+  PasswordDigest string    `json:"password_digest"`
+  ImageUrl       string    `json:"image_url"`
+  AuthToken      string    `json:"auth_token"`
+  CreatedAt      time.Time `json:"created_at"`
+  UpdatedAt      time.Time `json:"updated_at"`
 }
 
 // to do some validation on our input fields. File is done separately.
@@ -101,6 +115,10 @@ func main() {
   r := render.New(render.Options{})
   h := DBHandler{db: &db, r: r}
 
+  authRouter := mux.NewRouter()
+  authRouter.HandleFunc("/create", h.createUserHandler).Methods("POST")
+  authRouter.HandleFunc("/login", h.loginUserHandler).Methods("POST")
+
   // setup a basic CRUD/REST API for our guitar store.
   router := mux.NewRouter()
   router.HandleFunc("/guitars", h.guitarsIndexHandler).Methods("GET")
@@ -109,10 +127,74 @@ func main() {
   router.HandleFunc("/guitars/{id:[0-9]+}", h.guitarsUpdateHandler).Methods("PUT", "PATCH")
   router.HandleFunc("/guitars/{id:[0-9]+}", h.guitarsDestroyHandler).Methods("DELETE")
 
+  //auth the guitar routes
+  authRouter.Handle("/guitars", negroni.New(
+    negroni.HandlerFunc(h.authHandler),
+    negroni.Wrap(router),
+  ))
+
   n := negroni.Classic()
-  n.UseHandler(router)
+  n.UseHandler(authRouter)
   n.Run(":8080")
 }
+
+// create a new user
+func (h *DBHandler) createUserHandler(rw http.ResponseWriter, req *http.Request) {
+  // Get the form values out of the POST request.
+  name := req.FormValue("name")
+  password := req.FormValue("password")
+  imageUrl := req.FormValue("imageUrl")
+
+  // Generate a hashed password from bcrypt.
+  hashedPass, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
+  if err != nil {
+    log.Fatal(err)
+  }
+  count := 16
+  b := make([]byte, count)
+  rand.Seed(time.Now().UTC().UnixNano())
+  for i := 0; i < count; i++ {
+    b[i] = byte(rand.Intn(count))
+  }
+  token := hex.EncodeToString(b)
+  // Stick that in our users table of our db.
+  user := User{Name: name, PasswordDigest: string(hashedPass), ImageUrl: imageUrl, AuthToken: token, CreatedAt: time.Now(), UpdatedAt: time.Now()}
+  h.db.Save(&user)
+  user.PasswordDigest = "" //we don't need to expose that to the user
+  h.r.JSON(rw, http.StatusOK, &user)
+}
+
+//allows an existing user to login
+func (h *DBHandler) loginUserHandler(rw http.ResponseWriter, req *http.Request) {
+  // Get the form values out of the POST request.
+  name := req.FormValue("name")
+  password := req.FormValue("password")
+
+  user := User{}
+  h.db.Where("name = ?", name).First(&user) //in production code, we would of course validate this before running a where statement on a raw value
+  if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordDigest), []byte(password)); err != nil {
+    log.Println("login error: ", err)
+    http.Error(rw, "Not authorized", http.StatusUnauthorized)
+    return
+  }
+  user.PasswordDigest = "" //we don't need to expose that to the user
+  h.r.JSON(rw, http.StatusOK, &user)
+}
+
+//middleware that checks to make sure the authToken is a valid user
+func (h *DBHandler) authHandler(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+
+  token := r.FormValue("auth_token")
+  user := User{}
+  h.db.Where("auth_token = ?", token).First(&user) //in production code, we would of course validate this before running a where statement on a raw value
+  if user.Name == "" {
+    http.Error(rw, "Not authorized", http.StatusUnauthorized)
+    return
+  }
+  next(rw, r)
+}
+
+// our guitar routes.
 
 // guitarsIndexHandler returns all our guitars out of the db in a paginated fashion.
 func (h *DBHandler) guitarsIndexHandler(rw http.ResponseWriter, req *http.Request) {
@@ -223,10 +305,20 @@ func parseQueryValues(req *http.Request, value string) int {
 }
 ```
 
-The code is pretty straight forward (I might be bias since I wrote it. :)), but let's break it down from top to bottom. First thing we see after the imports are our types. Our first type is the `DBHandler` and used to encapsulate our db connection and render. The next two types are just used for modeling our guitar table in the db and form that gets posted to our API. In our `main` function we setup the db with [gorm](https://github.com/jinzhu/gorm). Gorm is a ORM library and we will see it get some more action in our endpoints. Notice we also setup our [render](https://github.com/unrolled/render) package. Render is a simple library for rendering templates, JSON, XML, etc. We use in our endpoints to render our `Guitar` structs as json. Now that our `DBHandler` is all setup and read to go, we can use [mux](https://github.com/gorilla/mux) to setup a basic router for RESTful endpoints. We then pass that into [negroni](https://github.com/codegangsta/negroni) which we use to serve up some basic middleware in our app. 
+This is the basic API from last week, with a little bit of the [crypto article](/golang-crypto.html) tossed in for authentication. Again, I won't belabor, as those articles covered the gritty details. Now let's get into the client code:
 
-Now that we got an app setup and ready to serve some API, all we need is our endpoint handlers. Since the handlers are pretty standard I won't belabor them to much. Looking at `guitarsIndexHandler` the interesting piece is our simple pagination we setup. We use `getPage` and `getPerPage` functions to pull the page and perPage params off the request url and then use a simple `LIMIT` and `OFFSET` query in SQL to get our results. With the `guitarsShowHandler` the only real interesting is the `getId` function. The mux router is nice enough to store our resource params that we are able to pull out and lookup our resource by, just like in other popular web frameworks. Notice the `guitarsCreateHandler` and `guitarsUpdateHandler` share mostly the same logic wrapped up in the `guitarsEdit` function. This is because updating and creating a guitar are the same form values that we can parse out in the same manner. 
+```swift
+//the client swift code
+```
 
-Combine this with last week's crypto article code for authenticating users and you are well on your way to having a nice RESTful API. My hope is in the next few articles to show how to add authentication, authorization, etc to this bit of code and show how you can use Swift to consume these APIs. Who knows, we might dip our toe in the Javascript pool and write a angular app to use these APIs as well :). As always any feedback is appreciated.
+Alright, that was a lot of code to digest between the server and client, but let's break down how much we have. We have a basic, yet fully functional authenticated API in Go. We also have a fully functional iOS app in Swift. This gives a great starting point for creating both a Go API server and new app in Swift. If we tossed in JS front-end framework we will have all the parts for baseline and modern application! (We only do the bleeding edge around here!). As always, comments, questions, and random rants are appreciated.
 
-[Twitter](https://twitter.com/acmacalister)
+[Twitter](https://twitter.com/daltoniam)
+
+[SwiftHTTP](https://github.com/daltoniam/SwiftHTTP)
+
+[Skeets](https://github.com/daltoniam/Skeets)
+
+[JSONJoy](https://github.com/daltoniam/JSONJoy-Swift)
+
+[Rouge](https://github.com/acmacalister/Rouge)
