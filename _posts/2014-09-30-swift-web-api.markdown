@@ -305,13 +305,154 @@ func parseQueryValues(req *http.Request, value string) int {
 }
 ```
 
-This is the basic API from last week, with a little bit of the [crypto article](/golang-crypto.html) tossed in for authentication. Again, I won't belabor, as those articles covered the gritty details. Now let's get into the client code:
+This is the basic API from last week, with a little bit of the [crypto article](/golang-crypto.html) tossed in for authentication. Again, I won't belabor, as those articles covered the gritty details. Now let's get into the client code.
 
+First let's start with `API.swift`.
 ```swift
-//the client swift code
+import Foundation
+import SwiftHTTP //need to import so we have access to HTTPTask
+
+//we will cover the differences of a struct and class in the next few weeks
+struct API {
+    ///create a new HTTPTask
+    static func newTask() -> HTTPTask {
+        var apiManger = HTTPTask()
+        apiManger.baseURL = "http://localhost:8080"
+        return apiManger
+        
+    }
+}
 ```
 
-Alright, that was a lot of code to digest between the server and client, but let's break down how much we have. We have a basic, yet fully functional authenticated API in Go. We also have a fully functional iOS app in Swift. This gives a great starting point for creating both a Go API server and new app in Swift. If we tossed in JS front-end framework we will have all the parts for baseline and modern application! (We only do the bleeding edge around here!). As always, comments, questions, and random rants are appreciated.
+This code is pretty straight forward. Create a new `HTTPTask` set the baseURL and return it. This leads into our next file `User.swift`
+
+```swift
+import Foundation
+import SwiftHTTP
+import JSONJoy
+
+public class User: JSONJoy { //JSONJoy is a protocol
+    var id: Int
+    var name: String
+    var imageUrl: String?
+    var authToken: String
+    //This is the required init method from JSONJoy. Check out the JSONJoy docs at the end of the article for more info.
+    required public init(_ decoder: JSONDecoder) {
+        id = decoder["id"].integer!
+        name = decoder["name"].string!
+        imageUrl = decoder["image_url"].string
+        authToken = decoder["auth_token"].string!
+    }
+    
+    ///do a login request
+    class func login(userName: String, password: String, success:((User) -> Void)!,failure:((NSError) -> Void)!) {
+        var task = API.newTask() //create a new task from the API.swift we just reviewed
+        //run a POST to the "/login" route. Since we set the baseURL when creating the task this becomes "http://localhost:8080/login"
+        task.POST("/login", parameters: ["name": userName, "password": password], success: { (response: HTTPResponse) in
+          //the request finished. Make sure our success closure is valid
+            if success != nil {
+                if let resp = response.responseObject as? NSData {
+                  //the object is NSData as we expected. We pass this raw JSON data to JSONDecoder which then is passed to User init method above.
+                    success(User(JSONDecoder(resp)))
+                }
+            }
+            }, { (error: NSError) in
+                if failure != nil {
+                    failure(error)
+                }
+        })
+    }
+    ///create an account. Basically works the same as the login
+    class func create(userName: String, password: String, imageUrl: String, success:((User) -> Void)!,failure:((NSError) -> Void)!) {
+        var task = API.newTask() //create a new task from the API.swift we just reviewed
+        task.POST("/create", parameters: ["name": userName, "password": password,"imageUrl": imageUrl], success: { (response: HTTPResponse) in
+            if success != nil {
+                if let resp = response.responseObject as? NSData {
+                    success(User(JSONDecoder(resp)))
+                }
+            }
+            }, { (error: NSError) in
+                if failure != nil {
+                    failure(error)
+                }
+        })
+    }
+}
+
+```
+
+Lastly we create a new view controller and wire it up.
+
+```swift
+import UIKit
+
+public protocol LoginDelegate {
+    func didLogin(user: User) //returns the user object created in our User model (User.swift)
+}
+
+public class LoginViewController : UIViewController {
+    
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var createButton: UIButton!
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    public var delegate: LoginDelegate? //delegate to notify our presenting controller we logged in
+    
+    //the login button action
+    @IBAction func login(sender: UIButton) {
+        loginButton.enabled = false //disable the button while we attempt the login
+        createButton.enabled = false
+        //new we call the User.login method that we just reviewed
+        User.login(nameField.text, password: passwordField.text, success: { (user: User) in
+          //that returns our new User object and we pass that to our delegate
+            self.delegate?.didLogin(user) 
+            }, { (error: NSError) in
+                self.errorFinished(error)
+        })
+    }
+    //the create button action
+    @IBAction func create(sender: UIButton) {
+        loginButton.enabled = false
+        createButton.enabled = false
+        User.create(nameField.text, password: passwordField.text, imageUrl: "http://vluxe.io/assets/images/logo.png", //could be any imageUrl
+            success: { (user: User) in
+            self.delegate?.didLogin(user)
+            }, { (error: NSError) in
+                self.errorFinished(error)
+        })
+        
+    }
+    
+    //show an alert and enable the buttons because the login or create failed
+    func errorFinished(error: NSError) {
+        println("unable to login")
+        self.loginButton.enabled = true
+        self.createButton.enabled = true
+        let alert = UIAlertView(title: "Error", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+}
+```
+
+This all shows up in `MasterViewController.swift`
+
+```swift
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if user == nil {
+            self.performSegueWithIdentifier("presentLogin", sender: self) //presentLogin is what we named our modal segue of the login controller 
+        }
+    }
+```
+
+I recommend checking out the full source for the client [here](https://github.com/Vluxe/Swift-API-Project). This includes the storyboard and all the code in context, which should hopefully clear up any ambiguity.
+
+I am sure you notice there are a few Swift libraries we have in there to make API interaction easier, much like the Go libraries we use on the API side. They are managed with a simple package manager we created until CocoaPods supports Swift frameworks. The package manager name is named [Rouge](https://github.com/acmacalister/Rouge) and is written in Swift (Swift, installing Swift libraries!?!? Queue the inception horn). I do stress that it is _simple_ and is just a way to avoid the annoyance of git submodules. It is in no way the caliber or scale of CocoaPods, but will hopefully easy the burden for the time being. The Swift libraries used are listed at the end of the article for your reviewing pleasure.
+
+Alright, that was a lot of code to digest between the server and client, but let's break down how much we have. We have a basic, yet fully functional authenticated API in Go. We also have the start of a fully functional iOS app in Swift. This gives a great starting point for creating both a Go API server and new app in Swift. If we tossed in JS front-end framework we will have all the parts for baseline and modern application (We only do the bleeding edge around here!). Next week we will finish off the client and show how to work use CRUD with our guitars.
+
+As always, comments, questions, and random rants are appreciated.
 
 [Twitter](https://twitter.com/daltoniam)
 
@@ -322,3 +463,5 @@ Alright, that was a lot of code to digest between the server and client, but let
 [JSONJoy](https://github.com/daltoniam/JSONJoy-Swift)
 
 [Rouge](https://github.com/acmacalister/Rouge)
+
+[Swift Project](https://github.com/Vluxe/Swift-API-Project)
