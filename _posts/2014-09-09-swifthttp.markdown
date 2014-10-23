@@ -292,7 +292,9 @@ The rapidly changing landscape of Cocoa development is certainly an exciting one
 
 [Twitter](https://twitter.com/daltoniam)
 
-[SwiftHTTP](https://twitter.com/daltoniamhttps://github.com/daltoniam/SwiftHTTP)
+[SwiftHTTP](https://github.com/daltoniam/SwiftHTTP)
+
+[JSONJoy](https://github.com/daltoniam/JSONJoy-Swift)
 
 
 
