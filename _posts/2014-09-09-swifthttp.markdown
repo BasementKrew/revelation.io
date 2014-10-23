@@ -44,7 +44,7 @@ request.GET("http://localhost:8080/bar", parameters: ["param": "param1", "array"
     if (response.responseObject != nil) {
         println("got response: \(response.responseObject!)")
     }
-    }, failure: {(error: NSError) -> Void in
+    }, failure: {(error: NSError, response: HTTPResponse?) -> Void in
         println("got an error: \(error)")
 })
 ```
@@ -83,7 +83,7 @@ Serialize parameters:
 var request = HTTPTask()
 request.POST("http://domain.com/create", parameters: ["param": "hi", "something": "else", "key": "value"], success: {(response: HTTPResponse) -> Void in
 
-    },failure: {(error: NSError) -> Void in
+    },failure: {(error: NSError, response: HTTPResponse?) -> Void in
 
     })
 ```
@@ -112,7 +112,7 @@ let params: Dictionary<String,AnyObject> = ["param": "param1", "array": ["first 
 var request = HTTPTask()
 request.POST("http://domain.com/create", parameters: params, success: {(response: HTTPResponse) -> Void in
 
-    },failure: {(error: NSError) -> Void in
+    },failure: {(error: NSError, response: HTTPResponse?) -> Void in
 
     })
 ```
@@ -130,7 +130,7 @@ request.GET("http://localhost:8080/bar", parameters: nil, success: {(response: H
         //response.responseObject is now a Dictionary of the JSON instead of just raw NSData
         println("got response: \(response.responseObject!)")
     }
-    }, failure: {(error: NSError) -> Void in
+    }, failure: {(error: NSError, response: HTTPResponse?) -> Void in
         println("got an error: \(error)")
 })
 ```
@@ -150,7 +150,7 @@ let fileUrl = NSURL.fileURLWithPath("/Users/dalton/Desktop/file")
 var request = HTTPTask()
 request.POST("http://domain.com/1/upload", parameters:  ["param": "hi", "something": "else", "key": "value","file": HTTPUpload(fileUrl: fileUrl)], success: {(response: HTTPResponse) -> Void in
 
-    },failure: {(error: NSError) -> Void in
+    },failure: {(error: NSError, response: HTTPResponse?) -> Void in
 
     })
 ```
@@ -173,7 +173,7 @@ var opt = request.create("http://vluxe.io", method: .GET, parameters: nil, succe
         let str = NSString(data: data, encoding: NSUTF8StringEncoding)
         println("response: \(str)") //prints the HTML of the page
     }
-    },failure: {(error: NSError) -> Void in
+    },failure: {(error: NSError, response: HTTPResponse?) -> Void in
         println("error: \(error)")
 })
 //To start the request, we simply add it to our queue
@@ -186,7 +186,7 @@ The example shows how easy it is to use an `NSOperationQueue` with SwiftHTTP. It
 
 ```swift
 //pulled this directly from the HTTPTask class.
-public func GET(url: String, parameters: Dictionary<String,AnyObject>?, success:((HTTPResponse) -> Void)!, failure:((NSError) -> Void)!) {
+public func GET(url: String, parameters: Dictionary<String,AnyObject>?, success:((HTTPResponse) -> Void)!, failure:((NSError,response: HTTPResponse?) -> Void)!) {
         var opt = self.create(url, method:.GET, parameters: parameters,success,failure)
         if opt != nil {
             opt!.start()
@@ -205,24 +205,86 @@ var request = HTTPTask()
 request.baseURL = "http://api.someserver.com/1"
 request.GET("/users", parameters: ["key": "value"], success: {(response: HTTPResponse) -> Void in
     println("Got data from http://api.someserver.com/1/users")
-    },failure: {(error: NSError) -> Void in
+    },failure: {(error: NSError, response: HTTPResponse?) -> Void in
 
     })
 
 request.POST("/users", parameters: ["key": "updatedVale"], success: {(response: HTTPResponse) -> Void in
     println("Got data from http://api.someserver.com/1/users")
-    },failure: {(error: NSError) -> Void in
+    },failure: {(error: NSError, response: HTTPResponse?) -> Void in
 
     })
 
 request.GET("/resources", parameters: ["key": "value"], success: {(response: HTTPResponse) -> Void in
     println("Got data from http://api.someserver.com/1/resources")
-    },failure: {(error: NSError) -> Void in
+    },failure: {(error: NSError, response: HTTPResponse?) -> Void in
 
     })
 ```
 
 This could also be combined with the operation queue functionally to provided queued API interaction (so orthogonal!).
+
+**JSONJoy**
+
+Need to interact with JSON to consume API data? Of course you do! Hate dealing with JSON as raw Foundation types? So do I. [JSONJoy](https://github.com/daltoniam/JSONJoy-Swift) was created to make interacting with JSON 100x better (that might be a slight exaggeration).
+
+Here is a simple Go server that serves up a simple JSON response.
+
+```go
+package main
+import (
+    "fmt"
+    "log"
+    "net/http"
+)
+
+func main() {
+    http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
+        log.Println("got a web request")
+        fmt.Println("header: ", r.Header.Get("someKey"))
+        w.Write([]byte("{\"status\": \"ok\", "code": 200, "route": "bar"}"))
+    })
+
+    log.Fatal(http.ListenAndServe(":8080", nil))
+}
+```
+
+We then create a Swift object and do a SwiftHTTP request.
+
+```swift
+//The object that will represent our response. More Info in the JSON Parsing section below.
+struct Status : JSONJoy {
+    var status: String?
+    var code: Int?
+    var route: String?
+    init() {
+
+    }
+    init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string
+        code = decoder["code"].integer
+        route = decoder["route"].string
+    }
+}
+//The request
+var request = HTTPTask()
+request.requestSerializer = HTTPRequestSerializer()
+request.requestSerializer.headers["someKey"] = "SomeValue" //example of adding a header value
+request.responseSerializer = JSONResponseSerializer()
+request.GET("http://localhost:8080/bar", parameters: nil, success: {(response: HTTPResponse) in
+    if (response.responseObject != nil) {
+        //we pass the JSON into a JSONDecoder init method to create a new JSONDecoder object. 
+        //Then we pass that JSONDecoder object into our Status object which calls the init(_ decoder: JSONDecoder) on the Status object.
+        //That's it, we have converted the JSON into a Swift Object.
+        let resp = Status(JSONDecoder(response.responseObject!)) 
+        if let status = resp.status {
+            println("status is: \(status)")
+        }
+    }
+    }, failure: {(error: NSError, response: HTTPResponse?) in
+        println("got an error: \(error)")
+})
+```
 
 **Closing**
 
