@@ -110,6 +110,7 @@ func main() {
   db.LogMode(true) // This would be off in production.
   defer db.Close()
   db.AutoMigrate(&Guitar{}) // nice for development, but I would probably just write a SQL script to do this.
+  db.AutoMigrate(&User{})
   db.Model(&Guitar{}).AddIndex("idx_guitar_id", "id")
 
   r := render.New(render.Options{})
