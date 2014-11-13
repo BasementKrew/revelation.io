@@ -53,7 +53,7 @@ func main() {
 }
 ```
 
-We are able to take a `struct` and convert it to XML, JSON, binary and hexadecimal in under 40 lines of code. Pretty sweet. Since this is suppose to be a blog on things we have learned in our programming adventures, I want to note a few things you, may or may not know. Notice that the `everything` struct does NOT have to be an exported type, but the struct fields DO. If you run this code you will notice the is field does not show up in the output and for good reason. The encoding packages use reflection to encode and decode values to and fro, which needs the struct fields to be settable, which unexported are not. Just to prove I'm not talking total nonsense (maybe a little) paste this anywhere in the `main` func above:
+We are able to take a `struct` and convert it to XML, JSON, binary and hexadecimal in under 40 lines of code, pretty sweet. Since this is suppose to be a blog on things we have learned in our programming adventures, I want to note a few things you may or may not have run into. Notice that the `everything` struct does NOT have to be an exported type, but the struct fields DO. If you run this code you will notice the `is` field does not show up in the output and for good reason. The encoding packages use reflection to encode and decode values to and fro, which needs the struct fields to be settable. The `is` field is unexported, so this makes sense. Just to prove I'm not talking total nonsense (maybe a little) paste this anywhere in the `main` func above:
 
 ```go
   // be sure to import reflect package.
@@ -69,7 +69,7 @@ We are able to take a `struct` and convert it to XML, JSON, binary and hexadecim
   }
 ```
 
- Since we need to save reflection for a different article that is all I have for today. Go is missing some more popular formats such as YAML and TOML, but the awesome golang community has stepped up and created some great packages for those encoding as well. Links to those below. As always, questions, comments and applauses is welcomed.
+ Since we need to save reflection for a different article that is all I have for today. Go is missing some more popular formats such as YAML and TOML, but the awesome golang community has stepped up and created some great packages for those encoding as well. Links to those below. As always, questions, comments and applauses are welcomed.
 
 [YAML](https://github.com/go-yaml/yaml)
 
