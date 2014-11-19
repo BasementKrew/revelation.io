@@ -7,7 +7,7 @@ summary: "This week we explore how to use the JSONJoy library in Swift."
 tags: apple, ios, swift, json, osx, parse, http, joy
 ---
 
-I started earlier today trying to decide on what topic to write about, when I considered JSONJoy I knew it was the article to write. This topic brought up fond and joyful (sorry I had to) memories throwing back to the very first [article](/json-parsing.html). I spend a fair amount of time trying to figure out how to replicate the same dynamic parsing to no [avail](/reaction-swift-reflection.html). I then realized I was asking the wrong question, why was this functionally not provided in Swift? I decided to change my mindset and see it from a safe, static programming point of view. After this shift in thinking and several hours of programming, JSONJoy was born. 
+I started earlier today trying to decide on what topic to write about and when I considered JSONJoy in Swift, I just knew it was the one. This topic brought up fond and joyful (sorry I had to) memories dating back to the very first [article](/json-parsing.html) I wrote. I spent a fair amount of time trying to figure out how to replicate the same dynamic parsing I did in Objective-C to no [avail](/reaction-swift-reflection.html). After taking a step back, I realized I was asking the wrong question. I decided to change my mindset and see it from a safe, static programming point of view that Swift aims for. After this shift in thinking and several hours of programming, JSONJoy (in Swift) was born.
 
 Let's start off with a fake API server in Go.
 
@@ -109,7 +109,7 @@ request.GET("http://localhost:8080/index", parameters: nil, success: {(response:
 
 The `index` route returned an array of `Guitar` objects. Since we had already setup the proper parsing in `init(_ decoder: JSONDecoder)` for a single object, we simply had to iterate the array and pass the nested `JSONDecoder` objects into each new object. Now we can sell guitars with total joy (I am out of control).
 
-JSONJoy is a simple and small library, but really encourages good MVC design. The biggest challenge for me was overcoming my hard set Objective-C ways. Swift is designed with safe and fast code in mind and while I still enjoy the Objective-C version of [JSONJoy](https://github.com/daltoniam/JSONJoy) and its unsafe and dynamic ways, I have come to accept and understand the important design choices made in Swift. I believe that in the end, it will create safer, faster, and easier to debug code. As far as programming languages go, that seems like a smart path to me. As always comments, questions, feedback, and random rants are appreciated.
+JSONJoy is a small, simple library, but really encourages good MVC design. The biggest challenge for me was overcoming my hard set Objective-C ways. Swift is designed with safe and fast code in mind and while I still enjoy the Objective-C version of [JSONJoy](https://github.com/daltoniam/JSONJoy) and it's "unsafe" and dynamic ways, I have come to accept and understand the important design choices made in Swift. I believe that in the end, it will create safer, faster, and easier to debug code. As far as programming languages go, that seems like a smart path to me. As always comments, questions, feedback, and random rants are appreciated.
 
 
 [@daltoniam](https://twitter.com/daltoniam)
