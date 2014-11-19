@@ -286,6 +286,8 @@ request.GET("http://localhost:8080/bar", parameters: nil, success: {(response: H
 })
 ```
 
+See the JSONJoy [article](/jsonjoy.html) for more info. 
+
 **Closing**
 
 The rapidly changing landscape of Cocoa development is certainly an exciting one. The opportunity to learn, try, and develop new things has always been a major reason I love programming and the release of Swift 1.0 is no exception. That all being said, this article will be a "living" article as changes and improvements are made to SwiftHTTP. As always, comments, thoughts, kudos, and random rants are appreciated.
@@ -295,6 +297,8 @@ The rapidly changing landscape of Cocoa development is certainly an exciting one
 [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP)
 
 [JSONJoy](https://github.com/daltoniam/JSONJoy-Swift)
+
+[JSONJoy Article](jsonjoy.html)
 
 
 
