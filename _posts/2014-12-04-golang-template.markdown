@@ -91,6 +91,8 @@ var templates = template.Must(template.ParseFiles("guitar.html", "other_template
 
 And make sure all the templates were parsed and ready to go before starting the app up. If you made it this far, I would suggest you take a look at the golang article on "Writing Web Applications". It is chalked full of great information on getting started to write web applications using the standard library. Also Jeremy Saenz (codegangsta) "Building Web Apps with Go" on the basic of writing web apps in Go. As always, questions and comments are welcomed.
 
+[Twitter](https://twitter.com/acmacalister)
+
 [Writing Web Applications](https://golang.org/doc/articles/wiki/)
 
 [Building Web Apps with Go](http://codegangsta.gitbooks.io/building-web-apps-with-go/)
