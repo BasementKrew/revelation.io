@@ -56,6 +56,7 @@ func (g *Guitar) mustacheHandler(rw http.ResponseWriter, req *http.Request) {
 Pretty simple server code. Let's check out the template files. First is the `html/template` example:
 
 ```html
+{% raw %}
 <html>
   <head>
     <title>{{.Brand}} {{.Name}} - {{.Color}}</title>
@@ -64,19 +65,22 @@ Pretty simple server code. Let's check out the template files. First is the `htm
     <h1>{{.Color}} {{.Year}} {{.Brand}} {{.Name}} - ${{.Price}}</h1>
   <body>
 </html>
+{% endraw %}
 ```
 
 Second is the mustache template:
 
 ```html
+{% raw %}
 <html>
   <head>
     <title>{{Brand}} {{Name}} - {{Color}}</title>
   </head>
   <body>
-    <h1>{{Color}} {{Year}} {{Brand}} {{Name}} - ${{Price}} {{Bull}}</h1>
+    <h1>{{Color}} {{Year}} {{Brand}} {{Name}} - ${{Price}}</h1>
   <body>
 </html>
+{% endraw %}
 ```
 
 There are a couple things to note above. First we are re-rendering the template each time the route is called. This is great for development, but we would want to cache those in production. Another thing is to take care with `html/template` If the template is incorrect or has any invalid fields, it will cause a panic. The Mustache library seems to just ignore errors in the template. This probably wouldn't be much of an issue in production as you would do some like so:
