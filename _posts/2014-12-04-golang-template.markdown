@@ -7,7 +7,7 @@ summary: "Simple look at server side templating in Go."
 tags: Go, golang, packages, pkg, templating, mustache, rendering
 ---
 
-Templating is a pretty popular subject in web development today. Chances are, if you have done any amount of web development you have worked with templating. The most popular types of templating that come to my mind are ERB templates in Ruby on Rails and Mustache templates. Below is a small sample of `html/template` and `mustache` templating in Go.
+Templating is a pretty popular subject in web development today. If you have done any amount of web development, chances are you have worked with templates. The most popular types of templates that come to my mind are ERB templates in Ruby on Rails and Mustache templates. Below is a small sample of `html/template` and `mustache` templates in Go.
 
 ```go
 package main
@@ -79,7 +79,7 @@ Second is the mustache template:
 </html>
 ```
 
-There are a couple things to note above. First we are re-rendering the template each time the route is called. This is great for development, but we would want to cache those in production. Another thing is to take care with `html/template` If the template is incorrect or has any invalid fields, it will cause a panic. The Mustache library seems to just ignore errors in the template. This probably wouldn't be much of an issue in production as you would do some like so:
+There are a couple things to note above. First we are re-rendering the template each time the route is called. This is great for development, but we would want to cache those in production. Another thing is to take care with `html/template`. If the template is incorrect or has any invalid fields, it will cause a panic. The Mustache library seems to just ignore errors in the template. This probably wouldn't be much of an issue in production as you would do some like so:
 
 ```go
 var templates = template.Must(template.ParseFiles("guitar.html", "other_template.html"))
