@@ -8,15 +8,15 @@ tags: apple, osx, ios, swift, http, wwdc, http, swifthttp, skeets, image, remote
 ---
 
 
-Fetching images via HTTP is a fairly straight forward task in Swift. Using [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP), it is even easier. Now doing it with a solid cache and making it easy to use is a touch more complex. This extra complexity can be overcome however, thanks to powerful features in Swift, namely closures. Sprinkle in some data structure knowledge and an HTTP library like SwiftHTTP, you well on your way to creating a simple HTTP image library like Skeets. Let's jump into some examples.
+Fetching images via HTTP is a fairly straight forward task in Swift. Using [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP), it is even easier. Now, doing it with a solid cache and making it easy to use is a touch more complex. This extra complexity can be overcome however, thanks to powerful features in Swift, namely closures. Sprinkle in some data structure knowledge and a HTTP library like SwiftHTTP, your well on your way to creating a simple HTTP image library like Skeets. Let's jump into some examples.
 
 
 ###Usage
 
-Right out the gate we need to set our cache directory. This only has to be done once and before we start using Skeets, so a natural place to put this code would be in our app delegate. 
+Before we start using Skeets, we need to setup our cache directory. This only has to be done once, so a natural place to put this code would be in our app delegate.
 
 ```swift
-//this would be: 
+//this would be:
 //func applicationDidFinishLaunching(aNotification: NSNotification) {
 //for the OS X folk. (we are small circle, got to show the support!)
 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
@@ -53,19 +53,19 @@ ImageManager.sharedManager.fetch("http://vluxe.io/assets/images/logo.png",
 })
 ```
 
-That is it. Caching, multiple request handling, and all that magic and wonder is all handle within the Skeets library, and you only need to know the one API. You aren't here for just a simple example of one API though, you could have gotten that from the README on the github project. You want to know how it works. Let's start with the cache manager.
+That's it. Caching, multiple request handling, and all that magic and wonder is handled within the Skeets library. You only need to know the one API. You aren't here for just a simple example of one API though. You could have easily gotten that from the README on the Github project. You want to know how it works. Let's start with the cache manager.
 
 ###Cache
 
-The overall design process of the cache manager was a goal to do everything in constant time. If you aren't familiar with Big O notation, no worries. Basically constant time means we do our "action" in one "pass". For example, we find our value in a Dictionary in one check or add a new item to a LinkedList. That is a fairly high level explanation and I would recommend reading more about it in the Big O link below (seriously interesting stuff, way better than this article). 
+The overall design process of the cache manager was a goal to do everything in constant time. If you aren't familiar with Big O notation, no worries. Basically constant time means we do our "action" in one "pass". For example, we find our value in a Dictionary in one check or add a new item to a LinkedList. That is a fairly high level explanation and I would recommend reading more about it in the Big O link below (seriously interesting stuff, way better than this article).
 
-The basic design use a Dictionary of custom LinkedList/Node system to make find items in the cache fast. The major difference between an open chaining Hash Map(Dictionary) is that the node chaining isn't used to resolve conflicts (the Swift Dictionary already handles that). The Linked List is used to know which item is the least recently used (LRU). This is handy and prune time as we just have to peel the last item off the list and remove it from the dictionary. The cache only has to add the most recently request item to the front of the list and older items will naturally move to the end. Check out the [Cache file](https://github.com/daltoniam/Skeets/blob/master/Cache.swift) to see the design in action.
+The basic design uses a Dictionary of custom LinkedList/Node system to make finding items in the cache fast. This differs from an open chaining HashMap (Dictionary) in that the node chaining isn't used to resolve conflicts (the Swift Dictionary already handles that). The Linked List is used to know which item is the least recently used (LRU). This is handy when it comes time to prune, as we just have to peel the last item off the list and remove it from the Dictionary. The cache only has to add the most recently request item to the front of the list and older items will naturally move to the end. Check out the [Cache file](https://github.com/daltoniam/Skeets/blob/master/Cache.swift) to see the design in action.
 
-Lastly, the cache uses the custom nodes to store image data in memory. When a image is fetched via an HTTP request it is saved to disk, so the cache manager can check if the image is already download as well. This disk image lookup is done asynchronously, just like the HTTP request (can't be blocking that main thread!). If the image isn't over the cache max date, it gets loaded into memory saving bandwidth from unnecessary HTTP lookups.
+Lastly, the cache uses the custom nodes to store image data in memory. When a image is fetched via an HTTP request it is saved to disk, so the cache manager can check if the image is already download as well. This disk image lookup is done asynchronously, just like the HTTP request (can't be blocking that main thread!). If the image isn't over the max cache time, it gets loaded into memory saving bandwidth from unnecessary HTTP lookups.
 
 ### ImageManager
 
-This class has the singleton in it and implements the cache object. It gathers closures that request the same URL to ensure they are all notified when the single request finishes. It is a fairly small and simple class, but the power and usefulness of Swift closures can't be understated. It allows the ImageManger class to gather closures, wait for the SwiftHTTP closure to finish and notify everything without have to do any tricky state management. 
+This class is a singleton and implements the cache object. It gathers closures that request the same URL to ensure they are all notified when the single request finishes. It is a fairly small and simple class, but the power and usefulness of Swift closures can't be understated. It allows the ImageManger class to gather closures, wait for the SwiftHTTP closure to finish and notify everything without have to do any tricky state management.
 
 ### The End
 
