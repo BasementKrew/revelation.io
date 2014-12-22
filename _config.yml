@@ -12,8 +12,7 @@ logo: "/assets/images/logo.png"
 # blog cover
 cover: "/assets/images/plans.png"
 
-url: "http://vluxe.io" # the base hostname & protocol for your site
-baseurl: "http://vluxe.io"
+url: http://vluxe.io
 
 social:
   - icon: twitter
