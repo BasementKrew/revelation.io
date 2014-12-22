@@ -3,6 +3,7 @@ layout: post
 title:  "Working with libpcap"
 date:   2014-03-17 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "Libpcap, the library that makes up the core of the defacto packet capturing software, Wireshark. Although there is a wealth of information online for using libpcap, much of it can be intimidating or dated. In this article we will go over the basics of libpcap and how to setup a simple packet capture."
 tags: libpcap, wireshark, packet, C, unix, posix
 ---

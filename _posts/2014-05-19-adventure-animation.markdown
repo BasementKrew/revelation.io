@@ -3,6 +3,7 @@ layout: post
 title:  "Adventure in Animation"
 date:   2014-05-19 10:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "This week, we cover the unsung hero of UI, Animations."
 tags: Objective-C, objc, animation, OpenGL, ES, graphics, Core, Animation
 ---

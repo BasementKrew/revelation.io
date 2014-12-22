@@ -3,6 +3,7 @@ layout: post
 title:  "Swift API"
 date:   2014-09-30 10:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "We follow up on our article from last week by building an iOS app in Swift that interacts with our guitar store API."
 tags: apple, ios, swift, http, swifthttp, json, joy, golang, web, api, guitar, store, tutorial, skeets
 ---

@@ -3,6 +3,7 @@ layout: post
 title:  "Thinking Through Threads"
 date:   2014-05-05 08:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "Threads. The well known backbone of concurrent code, but how much do we really know about them? This week we explore threads and their common design models, all leading up to our grand threading library, libdispatch."
 tags: Objective-C, objc, thread, concurrent, concurrency, libdispatch, queue, pool
 ---

@@ -3,6 +3,7 @@ layout: post
 title:  "Coaxing Concurrency"
 date:   2014-04-28 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "Concurreny is a hot topic in modern programming. In today's article we will cover some historical and possibly philosophical ideas behind concurrency. We will end our discussion with seeing how some of my favorite languages deal with the idea of concurrency."
 tags: concurrency, parallelism, threading, asynchronous, C, Objective-C, Python, Go, Golang
 ---

@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - Crypto"
 date:   2014-09-01 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "Cryptography has made significant advances with the rise of modern computing. In today's golang article we are going to take a peek at a couple of Go crypto packages."
 tags: Go, golang, packages, pkg, crypto
 ---

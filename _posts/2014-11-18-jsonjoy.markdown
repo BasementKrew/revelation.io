@@ -3,6 +3,7 @@ layout: post
 title:  "JSONJoy"
 date:   2014-11-18 10:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "This week we explore how to use the JSONJoy library in Swift."
 tags: apple, ios, swift, json, osx, parse, http, joy
 ---

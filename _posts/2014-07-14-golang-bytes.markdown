@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - Bytes & Strings"
 date:   2014-07-14 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "This week in our golang series we will be taking a look at the bytes and strings packages."
 tags: Go, golang, packages, pkg, strings, bytes, unicode, utf8
 ---

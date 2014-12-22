@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - Web API"
 date:   2014-09-24 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "In this week's article we will be building an API server for our guitar store using some popular open source packages."
 tags: Go, golang, packages, pkg, net/http, http, gorm, negroni, mux, mysql, binding, render
 ---

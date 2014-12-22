@@ -3,6 +3,7 @@ layout: post
 title:  "Relishing the Reactor Pattern"
 date:   2014-05-12 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "To continue with our vein on concurrency, in today's article we are going to cover the reactor pattern powering some of the hottest open source libraries to date."
 tags: concurrency, parallelism, asynchronous, C, reactor, node, libuv, eventmachine
 ---

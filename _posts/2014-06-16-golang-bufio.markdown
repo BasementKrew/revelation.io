@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - Bufio"
 date:   2014-06-16 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "Continuing our golang series, we follow with the next package after archive, bufio."
 tags: Go, golang, packages, pkg, bufio, buffered, unbuffered, io
 ---

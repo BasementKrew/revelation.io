@@ -3,6 +3,7 @@ layout: post
 title:  "Intro to ElasticSearch"
 date:   2014-03-31 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "The long journey, sleepless nights, and overwhelming bouts to learn the beauty of full text searching in ElasticSearch."
 tags: searching, elasticsearch, ruby, rails
 ---

@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - Template"
 date:   2014-12-04 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "Simple look at server side templating in Go."
 tags: Go, golang, packages, pkg, templating, mustache, rendering
 ---

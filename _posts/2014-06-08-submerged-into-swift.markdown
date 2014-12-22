@@ -3,6 +3,7 @@ layout: post
 title:  "Submerged into Swift"
 date:   2014-06-08 10:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "Now that WWDC, has finished up, we get back in the swing of things with a in depth look at swift."
 tags: Objective-C, objc, swift, wwdc, missed, week, apple, cocoa
 ---

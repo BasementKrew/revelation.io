@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - Encoding"
 date:   2014-11-13 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "This week we will take a peak at classic encoded forms in Go."
 tags: Go, golang, packages, pkg, encoding, json, xml, binary, gob
 ---
