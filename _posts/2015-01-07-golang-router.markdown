@@ -4,7 +4,7 @@ title:  "Build your own Router in Go"
 date:   2015-1-07 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
 author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
-summary: "Simple look at server side templating in Go."
+summary: "Simple example of building a HTTP router in Go."
 tags: Go, golang, packages, net/http, http, router, mux
 ---
 
@@ -59,7 +59,7 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 }
 ```
 
-In plain language it is what allows our `Handle` function we defined to actually receive HTTP request sent to it. 
+In plain language it is what allows our `Handle` function we defined to actually receive HTTP request sent to it.
 
 Now you might be wondering about that `tree` and `node` nonsense we have been waiting to cover. For the use case of our router, the `tree` is a Trie data structure. If you aren't familiar with a Trie, you can read more about it [here](https://www.cs.bu.edu/teaching/c/tree/trie/). There is of course, a lots of data structures you could use to build a router, but a Trie seemed like a natural fit with the structure of URLs.
 
