@@ -8,7 +8,7 @@ summary: "Making middleware in Go."
 tags: Go, golang, packages, net/http, http, middleware
 ---
 
-Middleware is a popular word used in the computing landscape nowadays, but do we even know what it means? According to Google, middleware is "software that acts as a bridge between an operating system or database and applications, especially on a network". Many web frameworks provide the idea of middleware in their HTTP layers and Go is no exception. As with our router we built in the last golang article we did, making Go middleware is just as easy as implementing the `ServeHTTP` method in the `net/http` package.
+Middleware is a popular word used in the computing landscape nowadays, but do we even know what it means? According to Google, middleware is "software that acts as a bridge between an operating system or database and applications, especially on a network". Many web frameworks provide the idea of middleware in their HTTP layers and Go is no exception. As with our router we built in a previous [article](/golang-router.html), making Go middleware is just as easy as implementing the `ServeHTTP` method in the `net/http` package.
 
 ```go
 package main
@@ -69,4 +69,4 @@ func barHandler(rw http.ResponseWriter, r *http.Request) {
 }
 ```
 
-That's all there is to it! Like I said above the magic all has to do with the `ServeHTTP` which satisfies the `http.Handler` interface. Obviously there a bunch of additions we do to this to make it production worth (move it into it's own package, add ways to stop the middleware chain at a certain point, convenience methods, etc), but all in all this should give us a basic idea of how middleware is setup in Go. As always, questions and comments are welcomed.
+That's all there is to it! Like I said above, the magic all has to do with the `ServeHTTP` which satisfies the `http.Handler` interface. Obviously there a bunch of additions we do to this to make it production worth (move it into it's own package, add ways to stop the middleware chain at a certain point, convenience methods, etc), but all in all this should give us a basic idea of how middleware is setup in Go. As always, questions and comments are welcomed.
