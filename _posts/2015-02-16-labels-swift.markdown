@@ -1,14 +1,14 @@
 ---
 layout: post
 title:  "Swift, Labels, Default Parameters, oh my!"
-date:   2015-01-16 10:00:00
+date:   2015-02-16 10:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
 author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 tags: swift, label, parameter, argument, method, function, default
 ---
 
 
-The other day I was working on [Jazz](https://github.com/daltoniam/Jazz) and got to fully appreciate the convenience of default parameters in Swift. The default parameters combined with the labels gives a simple and flexible method signature. This is in stark contrast to some other method signatures in other development settings. The methods in these settings can have an upwards of 10 parameters, all with arbitrary names. Let's take a look at an example of such methods:
+The other day I was working on [Jazz](https://github.com/daltoniam/Jazz) and got to fully appreciate the convenience of default parameters in Swift. Default parameters combined with labels gives a simple and flexible method signature. This is in stark contrast to some other method signatures in other development environments. methods in these environments can have an upwards of 10 parameters, all with arbitrary names. Let's take a look at an example of such methods:
 
 ```c
 LPTSTR szCmdline[] = _tcsdup(TEXT("\"C:\\Program Files\\MyApp\" -L -S"));
@@ -30,7 +30,7 @@ This is an old C++ Windows API (the shock and horror). Want to guess how many pa
   _Out_        LPPROCESS_INFORMATION lpProcessInformation
 );
 
-``` 
+```
 
 Now in its defense, C++ does allow for default parameters, thus making the total _required_ parameters 4. The ambiguity arises when trying to figure out what value is being passed for which parameter. Swift solves this problem by pulling in the verbosity of Objective-C by allowing parameters to be labeled. Here is an example from Jazz:
 
@@ -38,7 +38,7 @@ Now in its defense, C++ does allow for default parameters, thus making the total
 public func play(length: NSTimeInterval, delay: NSTimeInterval = 0, springDamping: CGFloat = 1, velocity: CGFloat = 1, animation:((Void) -> Void)) -> Jazz
 ```
 
-This allows for the method to be simple in average use case, but still be flexible and clear. Here is the simplest use case:
+This allows for the method to be simple in average use cases, but still being flexible and clear. Here is the simplest use case:
 
 ```swift
 play(0.25, animation: {
@@ -54,7 +54,7 @@ play(0.25, delay: 1.0, animation: {
 })
 ```
 
-Very clear and we still get to use the same method. Let's remove the delay and change the springDamping.
+Still very clear and we get to use the same method. Let's remove the delay and change the springDamping.
 
 ```swift
 play(0.25, springDamping: 0.5, animation: {
