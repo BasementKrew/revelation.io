@@ -8,7 +8,7 @@ summary: "Picking up where we left off in our golang series, today we will be re
 tags: Go, golang, packages, net/http, flag, flags, unix, gnu
 ---
 
-Flags are a well rooted Unix tradition. Chances are if you have been programming on a Unix based platform for any length of time you have had to use flags to configure behavior of different command line utilities. For those with a background in C programming you know how tedious and time consuming it can be to properly parse flags. Luckily in Go, we have a simple package in the standard library to do this for us.
+Flags are a well rooted Unix tradition. Chances are if you have been programming on a Unix based platform for any length of time, you have had to use flags to configure behavior of different command line utilities. For those with a background in C programming, you know how tedious and time consuming it can be to properly parse flags. Luckily in Go, we have a simple package in the standard library to do this for us.
 
 ```go
 package main
@@ -71,7 +71,7 @@ In case the code above is not immediately obvious, it is fetching the weather fo
 The weather in Bakersfield, CA is Fair with the temperature of 63F.
 ```
 
-See that we have two flags, `city` and `state` that except strings for their values.Notice also they have the default values of `Bakersfield` and `CA`, respectively. Interestingly enough, the flag values are actually pointers to the strings, which have to be deferenced to get their values. This holds true for pretty much every type supported in the flag package. If we run the program with the flags set, we get something like this:
+See that we have two flags, `city` and `state` that accept strings for their values. Notice also they have the default values of `Bakersfield` and `CA`, respectively. Interestingly enough, the flag values are actually pointers to the strings, which have to be deferenced to get their values. This holds true for pretty much every type supported in the flag package. If we run the program with the flags set, we get something like this:
 
 ```
 ./weather --city="New York" --state NY
@@ -88,7 +88,7 @@ As the documentation states we can run the flags with either a single or double 
 ./weather -city Cupertino
 ```
 
-A few things to note before we close. In the example above we are just using the default methods exported in the flag package. This is completely fine, but it is worth noting that you can create our own "custom" handling of flags using the `FlagSet` type in this package. It implements pretty much all the same methods and allows you to customize your usage method as well as the behavior for invalid flag parameters. One thing you may notice when using the flag package is how it does not behavior exactly like Unix or GNU based flags. According to Rob Pike as discussed in [this](https://groups.google.com/forum/#!topic/golang-nuts/3myLL-6mA94) go-nuts discussion this is by design. Meaning that things like this:
+A few things to note before we close. In the example above, we are just using the default methods exported in the flag package. This is completely fine, but it is worth noting that you can create our own "custom" handling of flags using the `FlagSet` type in this package. It implements pretty much all the same methods and allows you to customize your usage method as well as the behavior for invalid flag parameters. One thing you may notice when using the flag package is how it does not behave exactly like Unix or GNU based flags. According to Rob Pike in a go-nuts discussion [here](https://groups.google.com/forum/#!topic/golang-nuts/3myLL-6mA94), this is by design. Meaning that things like this:
 
 ```
 ./weather --city=
