@@ -1,13 +1,13 @@
 ---
 layout: post
 title:  "Swift People"
-date:   2015-03-05 10:00:00
+date:   2015-03-06 10:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
 author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 tags: apple, ios, swift, http, swifthttp, skeets, image, remote, app, build, tableview, cocoa, pods, storyboard, JSONJoy
 ---
 
-The last few weeks, I have been asked the same question, "how do I load asynchronous images or data in a UITableView in Swift?". While I love to help out, answering the same question can get a bit repetitive. I then used my powers of deduction and said "wait, I have a blog! I should write an article on this.". A few hours later Swift People was born. 
+The last few weeks, I have been asked the same question, "how do I load asynchronous images or data in a UITableView in Swift?". While I love to help out, answering the same question can get a bit repetitive. I then used my powers of deduction and said "wait, I have a blog! I should write an article on this.". A few hours later Swift People was born.
 
 We will create the "Swift People" project, which will walk through the basics of creating a new project with framework management and load remote data and images into a tableView. Let's start with the framework management to get [Skeets](https://github.com/daltoniam/Skeets), [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP), and [JSONJoy](https://github.com/daltoniam/JSONJoy-Swift) in our project. The full project is available [here](https://github.com/Vluxe/SwiftPeople).
 
@@ -17,13 +17,13 @@ There are several great options for framework management, namely: [Carthage](htt
 
 If you haven't install CocoaPods yet, check out the install docs [here](http://cocoapods.org).
 
-Next create a xCode project (I named mine SwiftPeople). Then from terminal navigate to your new project directory run:
+Next create a Xcode project (I named mine SwiftPeople). Then from terminal navigate to your new project directory and run:
 
  ```
  touch Podfile
- ``` 
+ ```
 
- Now open the `Podfile` file with your favorite text editor. Add these lines:
+ Now open the `Podfile` file with your favorite text editor and add these lines:
 
  ```
 source 'https://github.com/CocoaPods/Specs.git'
@@ -35,13 +35,13 @@ pod 'Skeets'
 pod 'JSONJoy-Swift'
  ```
 
- Next run this from terminal:
+ Next run this in terminal:
 
 ```
 pod install
 ```
 
-This will install the pods. Close your xCode project and open the newly created workspace file. This can be done from terminal if you want.
+This will install the pods. Close your Xcode project and open the newly created workspace file. This can be done from terminal if you want.
 
 ```
 open SwiftPeople.xcworkspace
@@ -89,7 +89,7 @@ struct User: JSONJoy {
     let picture: Picture
     //computed property to return a full name: "John Doe".
     var displayName: String { return "\(name.first) \(name.last)" }
-    
+
     //implement the JSONJoy protocol
     init(_ decoder: JSONDecoder) {
         name = Name(decoder["name"])
@@ -101,7 +101,7 @@ struct User: JSONJoy {
 struct Name: JSONJoy {
     let first: String
     let last: String
-    
+
     //JSONJoy init method
     init(_ decoder: JSONDecoder) {
         first = safeString(decoder,"first")
@@ -120,7 +120,7 @@ struct Picture: JSONJoy {
     let small: String
     let medium: String
     let large: String
-    
+
     //JSONJoy init method
     init(_ decoder: JSONDecoder) {
         thumbnail = safeString(decoder,"thumbnail")
