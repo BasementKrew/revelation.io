@@ -5,6 +5,9 @@
   {% include head.html %}
   <body itemscope itemtype="http://schema.org/Article">
     {% include header.html %}
+    {% if page.confetti %}
+    <canvas id="world"></canvas>
+    {% endif %}
     <main class="content" role="main">
       <article class="post">
         <div class="noarticleimage">
