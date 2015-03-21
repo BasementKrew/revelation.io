@@ -15,10 +15,6 @@ We will create the "Swift People" project, which will walk through the basics of
 
 There are several great options for framework management, namely: [Carthage](https://github.com/Carthage/Carthage), [Rogue](https://github.com/acmacalister/Rogue) and [CocoaPods](http://cocoapods.org). I would recommend checking out each to see which one best fits in your workflow. Swift People will use CocoaPods since it is the most well known.
 
-First off I would like to add a quick disclaimer about using CocoaPods. As of today (March 6th, 2015) CocoaPods Swift framework support is in **beta**. You will have to install the pre-release in order to get started, so install and use with **discretion** and at **your own risk**.
-
-`gem install cocoapods --pre`
-
 If you haven't install CocoaPods yet, check out the install docs [here](http://cocoapods.org).
 
 Next create a Xcode project (I named mine SwiftPeople). Then from terminal navigate to your new project directory and run:
@@ -30,10 +26,13 @@ Next create a Xcode project (I named mine SwiftPeople). Then from terminal navig
  Now open the `Podfile` file with your favorite text editor and add these lines:
 
  ```
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
-pod 'SwiftHTTP', :git => "https://github.com/daltoniam/SwiftHTTP.git"
-pod 'Skeets', :git => "https://github.com/daltoniam/Skeets.git"
-pod 'JSONJoy-Swift', :git => "https://github.com/daltoniam/JSONJoy-Swift.git"
+use_frameworks!
+
+pod 'SwiftHTTP'
+pod 'Skeets'
+pod 'JSONJoy-Swift'
  ```
 
  Next run this in terminal:
@@ -213,6 +212,7 @@ This is a simple example, but gives a good start point to start building apps th
 
 - [Swift People](https://github.com/Vluxe/SwiftPeople)
 - [randomuser.me](https://randomuser.me)
+- [CocoaPods](http://cocoapods.org)
 - [Skeets](https://github.com/daltoniam/Skeets)
 - [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP)
 - [JSONJoy](https://github.com/daltoniam/JSONJoy-Swift)
