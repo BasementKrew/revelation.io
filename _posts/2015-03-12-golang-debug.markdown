@@ -4,11 +4,11 @@ title:  "Gopher Go! - Debug"
 date:   2015-03-12 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
 author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
-summary: "Today's adventures will include splunking through Go binaries to see what interesting tidbits we turn up."
+summary: "Today's adventures will include spelunking through Go binaries to see what interesting tidbits we turn up."
 tags: Go, golang, packages, debug, compilers, compiling, gc, unix, linux, executables
 ---
 
-In today's article, instead of our usual brief overview of a golang package with some example code, we are going to something a bit more interesting. We are going to do some amateur level pulling apart of a compiled golang program. If you have experience with compilers and computer architectures, this article might be very fundamental to you. If you haven't, buckle up and let's take a ride to the unknown!
+Instead of our usual brief overview of a golang package with some example code, we are going to something a bit more interesting. We are going to do some amateur level pulling apart of a compiled golang program. If you have experience with compilers and computer architectures, this article might be very fundamental to you. If you haven't, buckle up and let's take a ride to the unknown!
 
 ```go
 package main
@@ -22,7 +22,7 @@ func main() {
 }
 ```
 
-above is a super simple program we are all familiar with. If we compile and run it, it will simply print the text "Hello World!" and "Hello World from l" with the current date to standard out. Easy enough. As simple as this program is, an perplexing question arose. Go doesn't really have any "namespacing" to speak off, outside of what is scoped per package. How then, can log package have two `Println` functions? If we take a look inside the log source code, we see that one of the `Println` functions is part of the package and the other is "scoped" under the `Logger` struct type. That is pretty straight forward, but let's dig a little deeper. In languages that provide classes, generally, classes can methods with same name without any conflicts. Have you ever wondered how that is possible? Let's take a look at our "friendly" (cough..) neighborhood C++ to see if he can shed some light for us.
+above is a super simple program we are all familiar with. If we compile and run it, it will simply print the text `Hello World!` and `Hello World from l` with the current date to standard out. As simple as this program is, it raises a perplexing question. Go doesn't really have any "namespacing" to speak of, outside of what is scoped per package. How then, can the log package have two `Println` functions? If we take a look inside the log package source code, we see that one of the `Println` functions is part of the package and the other is "scoped" under the `Logger` struct type. That is pretty straight forward, but let's dig a little deeper. In languages that provide classes, generally, classes can have methods with the same name without any conflicts. Have you ever wondered how that is possible? Let's take a look at our "friendly" (cough..) neighborhood C++ to see if he can shed some light for us.
 
 ```c++
 #include <stdio.h>
@@ -54,7 +54,7 @@ Probably not the prettiest C++ in the world, but it will do the job. If we compi
 nm printer
 ```
 
-Where printer is the binary name of our C++ program. A quick note. nm is only available on nix systems (sorry Windows folks), but there is some good news. The go tool has nm as well, so technically speaking if Go supports a platform, I would suspect that nm would work (I didn't get to test it on Windows, so I can't be for sure). Upon running nm, you should see something like this:
+printer is the binary name of our C++ program. A quick note, `nm` is only available on nix systems (sorry Windows folks), but there is some good news. The Go tool has `nm` as well, so technically speaking if Go supports a platform, I would suspect that `nm` would work (I didn't get to test it on Windows, so I can't be sure). Upon running nm, you should see something like this:
 
 ```
 0000000100000ee0 T __Z7printerPKc
@@ -66,7 +66,7 @@ Where printer is the binary name of our C++ program. A quick note. nm is only av
                  U dyld_stub_binder
 ```
 
-My C++ app was compiled with clang, so your output could vary depending on your compiler. The main take away is the first two lines. Notice how there is a `__Z7printerPKc` which maps to our free `printer` function and second is `__ZN6Logger7printerEPKc` which maps to our printer function inside the Logger class. Pretty neat. What if we run nm against our Go program from above?
+My C++ app was compiled with clang, so your output could vary depending on your compiler. The main take away is the first two lines. Notice how there is a `__Z7printerPKc` which maps to our free `printer` function and second is `__ZN6Logger7printerEPKc` which maps to our printer function inside the Logger class. Pretty neat, but what if we run `nm` against our Go program from above?
 
 ```
 000000000010576c s $f32.00000000
@@ -107,20 +107,20 @@ nm printer | grep log
 0000000000005890 t runtime.(*cpuProfile).flushlog
 ```
 
-Ah, now we see. Go does have some speical annotion it adds to functions attached to types and therefore giving us the free to have functions with the same name in a single package. With that mystrey solved, let us jump back to why Go has so many symbols in it's binary compared to the C++ program? Well, as you have probably heard, this has to do with Go binaries being completely statically linked. Meaning there are no shared libraries to speak. To prove that, let's us our friend `otool` (ldd on Linux).
+Ah, now we see. Go does have some special annotation it adds to functions attached to types and therefore giving us the freedom to have functions with the same names in a single package. With that mystery solved, let us jump back to why Go has so many symbols in it's binary compared to the C++ program? Well, as you have probably heard, this has to do with Go binaries being completely statically linked. Meaning there are no shared libraries to speak. To prove that, let's us our friend `otool` (ldd on Linux).
 
 ```
 otool -L printer
 ```
 
-Notice it prints nothing, other than the binaries name. Let's do the same on our C++ program.
+Notice it prints nothing, other than the binary's name. Let's do the same on our C++ program.
 
 ```
  /usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 120.0.0)
 /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1213.0.0)
 ```
 
-Would you look at, shared libraries. In OS X, libc++ is the C++ standard library and libSystem.B is all the available system calls (POSIX, OS X specific tech, etc). Those libraries also have shared libraries they depend on, but if you run on nm on either of them, you can see the different functions they implement in their symbol table. As with most things in Computer Science, there are trade offs to static and shared libraries, but it is interesting to see the differences. The Go standard library gives you access to read binaries using the `debug` package, but I had some trouble getting things to work properly for creating a simple nm like tool for an example. Turns out the go tool version of nm, doesn't use the debug package either and do it the very infrequent need to read out binary tid-bits, like these, I doubt it is worth the effort to do much exploring in. I always find lower level parts of how languages, compilers and such work, so any excuse to get to play with them is time well spent. As always, questions and comments are welcomed.
+Would you look at, shared libraries. In OS X, libc++ is the C++ standard library and libSystem.B is all the available system calls (POSIX, OS X specific tech, etc.). Those libraries also have shared libraries they depend on, but if you run on `nm` on either of them, you can see the different functions they implement in their symbol table. As with most things in Computer Science, there are trade offs to static and shared libraries, but it is interesting to see the differences. The Go standard library gives you access to read binaries using the `debug` package, but I had some trouble getting things to work properly for creating a simple `nm` like tool for an example. Turns out the go tool version of `nm`, doesn't use the debug package either and as it is a very infrequent need to read out binary tid-bits, I doubt it is worth the effort to do much looking in to. I always find lower level parts of how languages work an interesting topic to explore. Any excuse to get to play with them is time well spent. As always, questions and comments are welcomed.
 
 [Source of log package](http://golang.org/src/log/log.go)
 
