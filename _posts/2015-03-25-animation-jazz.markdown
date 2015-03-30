@@ -11,13 +11,13 @@ I was recently given an idea by a former colleague to find and implement cool dr
 
 ![](https://d13yacurqjgara.cloudfront.net/users/62319/screenshots/1945593/shot.gif)
 
-This animation was created for Secret Project at invision by [Anton Aheichanka](https://dribbble.com/madebyanton). Now I will admit my reproduction isn't detail for detail of the mockup, but for a few hours of work I am happy with the result.
+This animation was created for "Secret Project" at Invision by [Anton Aheichanka](https://dribbble.com/madebyanton). Now I will admit my reproduction isn't as detailed as the mock-up, but for a few hours of work I am happy with the result.
 
 ![](/assets/images/login.gif)
 
-You can find the full code [here](https://github.com/Vluxe/AnimationSeries/tree/master/login). Let's break down each component starting with the obvious ones. The background is a `UIImageView`. I just found a stock image and added the `UIImageView` as the first subview to the view hierarchy. The two `UITextField` are the same as the `UIImageView` (minus the image of course). The interesting part is our custom button and loading dialog, so let's move on to that.
+You can find the full code [here](https://github.com/Vluxe/AnimationSeries/tree/master/login). Let's break down each component starting with the obvious ones. The background is a `UIImageView`. I just found a stock image and added the `UIImageView` as the first sub view to the view hierarchy. The two `UITextField` are the same as the `UIImageView` (minus the image of course). The interesting part is our custom button and loading dialog, so let's move on to that.
 
-These custom controls are built to respond to animated changes and included in Jazz. The first thing we do is add the button to the view hierarchy, just like the `UIImageView` or `UITextField`. We also need to add the loading dialog to the view, but hide it, as we aren't loading anything yet.
+These custom controls are built to respond to animated changes and are included in Jazz. The first thing we do is add the button to the view hierarchy, just like the `UIImageView` or `UITextField`. We also need to add the loading dialog to the view, but hide it, as we aren't loading anything yet.
 
 ```swift
 let offset: CGFloat = 50
@@ -85,9 +85,9 @@ loadingView.hidden = true
 self.view.addSubview(loadingView)
 ```
 
-The button and loading dialog are added to the view hierarchy, then the animations are scheduled to be run once the button is tapped. This causes the loading dialog to be displayed. The cool part is the way the animations are chained to run one after another. This makes expressing complex animations easy. Jazz also makes creating custom controls easy, by being protocol based and having a base `Shape` class that allows most basic shapes to be easily animated. I don't want to do to much self promotion here, so I suggest checking out the learning more about playing animation Jazz from from the [docs](https://github.com/daltoniam/Jazz).
+The button and loading dialog are added to the view hierarchy, then the animations are scheduled to be run once the button is tapped. This causes the loading dialog to be displayed. The cool part is the way the animations are chained to run one after another. This makes expressing complex animations easy. Jazz also makes creating custom controls easy, by being protocol based and having a base `Shape` class that allows most basic shapes to be easily animated. I don't want to do to much self promotion here, so I suggest checking out the [docs](https://github.com/daltoniam/Jazz).
 
-In conclusion, I now ask you for help. I would love to be able to post these reproduction animations to dribbble, but alas, I am still a prospect. If you have an invite and would like to share, I would much appreciate it. If you are a designer or just found a cool animation and would like to have the work featured, let me know. I would like this could become a recurring series of different animations and UIs. As always, questions, comments, and random rants are appreciated. [@daltoniam](https://twitter.com/daltoniam)
+In conclusion, I now ask you for help. I would love to be able to post these reproduction animations to Dribbble, but alas, I am still a prospect. If you have an invite and would like to share, I would much appreciate it. If you are a designer or just found a cool animation and would like to have the work featured, let me know. I would like this to become a recurring series of different animations and UIs. As always, questions, comments, and random rants are appreciated.
 
 - [Designer](https://dribbble.com/madebyanton)
 
