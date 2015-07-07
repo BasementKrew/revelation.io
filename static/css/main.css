@@ -32,7 +32,7 @@ a:hover {
   	background-size: cover;
 }
 .heroText {
-	margin-top: 200px;
+	margin-top: 5%;
 	text-align: center;
 	font-size: 120px;
 	color: #FFF;
@@ -59,6 +59,18 @@ a:hover {
 	margin-left: auto;
 	margin-right: auto;
 	width: 1200px;
+	
+	@media(max-width:767px) {
+		width: 300px;
+	}
+	@media(min-width:768px){
+		width: 800px;
+	}
+	@media(min-width:992px){
+		width: 1000px;
+	}
+/*	@media(min-width:1200px){
+	}*/
 }
 
 footer {
@@ -72,17 +84,17 @@ footer ul {
     text-align: center;
 }
 
-footer ul:after,
-footer ul:before {
+ul:after,
+ul:before {
     content: '';
     display: table
 }
 
-footer ul:after {
+ul:after {
     clear: both;
 }
 
-footer li {
+li {
     white-space: nowrap;
     line-height: 40px;
     margin: 22px;
