@@ -1,0 +1,91 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+h2 {
+	font-size: 48px;
+	font-weight: bold;
+}
+a {
+	text-decoration: none;
+	color: #FFF;
+}
+a:hover {
+    color: #20b9e7;
+}
+.hero {
+	height: 93%;
+	width: 100%;
+    left: 0;
+    top: 0;
+	background: url(/images/plans.jpg); /* no-repeat center center fixed */ 
+	color: #000;
+  	overflow: hidden;
+  	background-position: center;
+  	background-repeat: no-repeat;
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-ms-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
+.heroText {
+	margin-top: 200px;
+	text-align: center;
+	font-size: 120px;
+	color: #FFF;
+}
+.heroSubText {
+	margin-top: 20px;
+	text-align: center;
+	font-size: 48px;
+	color: #FFF;
+}
+.about {
+	background-color: #FFF;
+}
+.client {
+	padding-top: 5px;
+	background-color: #fafafa; /* eee 122332 */
+}
+.blog {
+	background-color: #FFF;
+}
+.content {
+	font-size: 20px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1200px;
+}
+
+footer {
+	color: #FFF;
+	background-color: #000;
+    padding: 62px 0;
+}
+
+footer ul {
+    vertical-align: bottom;
+    text-align: center;
+}
+
+footer ul:after,
+footer ul:before {
+    content: '';
+    display: table
+}
+
+footer ul:after {
+    clear: both;
+}
+
+footer li {
+    white-space: nowrap;
+    line-height: 40px;
+    margin: 22px;
+    font-size: 16px;
+    display: inline;
+}
