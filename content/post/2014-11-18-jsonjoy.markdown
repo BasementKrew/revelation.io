@@ -1,0 +1,125 @@
+---
+title:  "JSONJoy"
+date:   2014-11-18T10:00:00-07:00
+author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
+summary: "This week we explore how to use the JSONJoy library in Swift."
+tags: apple, ios, swift, json, osx, parse, http, joy
+---
+
+I started earlier today trying to decide on what topic to write about and when I considered JSONJoy in Swift, I just knew it was the one. This topic brought up fond and joyful (sorry I had to) memories dating back to the very first [article](/json-parsing.html) I wrote. I spent a fair amount of time trying to figure out how to replicate the same dynamic parsing I did in Objective-C to no [avail](/reaction-swift-reflection.html). After taking a step back, I realized I was asking the wrong question. I decided to change my mindset and see it from a safe, static programming point of view that Swift aims for. After this shift in thinking and several hours of programming, JSONJoy (in Swift) was born.
+
+Let's start off with a fake API server in Go.
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "net/http"
+)
+
+func main() {
+  http.HandleFunc("/show", func(w http.ResponseWriter, r *http.Request) {
+    log.Println("got a show request")
+    json := []byte(`{"name": "Les Paul", "brand": "Gibson", "price": 5000, "color": "red", "address": {"street": "2nd Street", "city": "Bakersfield", "state": "CA", "postal_code": 93309}}`)
+    w.Write([]byte("{\"status\": \"ok\"}"))
+  })
+  http.HandleFunc("/index", func(w http.ResponseWriter, r *http.Request) {
+    log.Println("got a index request")
+    json := []byte(`[
+    {"name": "Les Paul", "brand": "Gibson", "price": 5000, "color": "red", "address": {"street": "2nd Street", "city": "Bakersfield", "state": "CA", "postal_code": 93309}},
+    {"name": "Stratocaster", "brand": "Fender", "price": 1000, "color": "blue", "address": {"street": "3rd Street", "city": "Austin", "state": "TX", "postal_code": 123456}}
+  ]`)
+    w.Write(json)
+  })
+
+  log.Fatal(http.ListenAndServe(":8080", nil))
+}
+```
+
+If you aren't familiar with Go, no worries. This code basically returns some JSON for us to play with since most of the time our JSON comes back from an API. Let's start with the `show` route. Using [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP) for the HTTP calls, we will grab our JSON from the Go API. (P.S. There are ways to build more flexible APIs in Go, check out the [API Article](/golang-web-api.html))
+
+```swift
+struct Address : JSONJoy {
+    var street: String?
+    var city: String?
+    var state: String?
+    var postalCode: Int?
+    init() {
+
+    }
+    init(_ decoder: JSONDecoder) {
+        street = decoder["street_address"].string
+        city = decoder["city"].string
+        state = decoder["state"].string
+        postalCode = decoder["postal_code"].integer
+    }
+}
+
+struct Guitar : JSONJoy {
+    var name: String?
+    var brand: String?
+    var price: Int?
+    var color: String?
+    var address: Address?
+    init() {
+    }
+    init(_ decoder: JSONDecoder) {
+        name = decoder["name"].string
+        brand = decoder["brand"].string
+        price = decoder["price"].integer
+        address = Address(decoder["address"])
+    }
+}
+
+var request = HTTPTask()
+request.responseSerializer = JSONResponseSerializer()
+request.GET("http://localhost:8080/show", parameters: nil, success: {(response: HTTPResponse) in
+    if response.responseObject != nil {
+        let guitar = Guitar(JSONDecoder(response.responseObject!))
+        println("status is: \(guitar.name)")
+    }
+    }, failure: {(error: NSError, response: HTTPResponse?) in
+        println("got an error: \(error)")
+})
+```
+
+
+The example above pretty much shows the basic how-to of JSONJoy. We create an object (Guitar in this case) and have it implement the `JSONJoy` protocol. The protocol requires that `init(_ decoder: JSONDecoder)` be implemented. The `JSONDecoder` object is recursive in nature, so its array and dictionary accesses both return `JSONDecoder` objects as well. `JSONDecoder` provides `String`, `Int`, `Double`, `Float`, `Bool`, `NSError`, `Array`, and `Dictionary`. Each of these return an optional. This allows picking the right type and move through nested JSON without the fear of crashing (e.g. if `name` = `decoder["someBadKey"]["nonsense"].string` it would just be set to `nil` and nothing would be wrong). One other point of interest is the `Address` object of `Guitar`. This takes advantage of the recursiveness of `JSONDecoder` to make creating other objects easy and logical as well. Let's move on to the `index` route.
+
+```swift
+var request = HTTPTask()
+request.responseSerializer = JSONResponseSerializer()
+request.GET("http://localhost:8080/index", parameters: nil, success: {(response: HTTPResponse) in
+    if response.responseObject != nil {
+        let decoder = JSONDecoder(response.responseObject!)
+        if let decoders = decoder.array {
+            var guitars = Array<Guitar>()
+            for subDecoder in decoders {
+                guitars.append(Guitar(subDecoder))
+            }
+        }
+    }
+    }, failure: {(error: NSError, response: HTTPResponse?) in
+        println("got an error: \(error)")
+})
+```
+
+The `index` route returned an array of `Guitar` objects. Since we had already setup the proper parsing in `init(_ decoder: JSONDecoder)` for a single object, we simply had to iterate the array and pass the nested `JSONDecoder` objects into each new object. Now we can sell guitars with total joy (I am out of control).
+
+JSONJoy is a small, simple library, but really encourages good MVC design. The biggest challenge for me was overcoming my hard set Objective-C ways. Swift is designed with safe and fast code in mind and while I still enjoy the Objective-C version of [JSONJoy](https://github.com/daltoniam/JSONJoy) and it's "unsafe" and dynamic ways, I have come to accept and understand the important design choices made in Swift. I believe that in the end, it will create safer, faster, and easier to debug code. As far as programming languages go, that seems like a smart path to me. As always comments, questions, feedback, and random rants are appreciated.
+
+
+[@daltoniam](https://twitter.com/daltoniam)
+
+[JSONJoy](https://github.com/daltoniam/JSONJoy-Swift)
+
+[SwiftHTTP](https://github.com/daltoniam/SwiftHTTP)
+
+
+
+
+
+

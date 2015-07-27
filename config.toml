@@ -1,4 +1,5 @@
-baseurl = "http://vluxe.io/"
+BaseURL = "http://vluxe.io/"
 languageCode = "en-us"
 title = "Vluxe"
 pygmentsstyle = "xcode"
+metaDataFormat = "yaml"

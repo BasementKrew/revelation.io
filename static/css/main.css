@@ -4,9 +4,11 @@ html, body {
 	margin: 0;
 	font-family: 'Open Sans', sans-serif;
 }
+p {
+	font-family: 'Open Sans', sans-serif;
+}
 h2 {
 	font-size: 48px;
-	font-weight: bold;
 }
 a {
 	text-decoration: none;
@@ -32,16 +34,26 @@ a:hover {
   	background-size: cover;
 }
 .heroText {
-	margin-top: 5%;
+	margin-top: 15%;
 	text-align: center;
-	font-size: 120px;
+	font-size:  3rem; /* 120px; */
+	font-weight: 300;
+	letter-spacing: 0.05rem;
 	color: #FFF;
 }
-.heroSubText {
+.btn {
+	font-size: 24px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.65rem 2rem 0.75rem 2rem;
+}
+.btn:hover {
+	background: #FFF;
+	color: #000;
+}
+.btnBottom {
 	margin-top: 20px;
-	text-align: center;
-	font-size: 48px;
-	color: #FFF;
+	margin-bottom: 80px;
 }
 .about {
 	background-color: #FFF;
@@ -58,19 +70,31 @@ a:hover {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-	width: 1200px;
-	
-	@media(max-width:767px) {
-		width: 300px;
-	}
-	@media(min-width:768px){
-		width: 800px;
-	}
-	@media(min-width:992px){
-		width: 1000px;
-	}
-/*	@media(min-width:1200px){
-	}*/
+}
+.content-pad {
+	margin-bottom: 40px;
+}
+
+.author-image {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    border-radius: 100%;
+    text-indent: -9999px;
+}
+.author-title {
+	font-size: 18px;
+	line-height: 1.1;
+}
+.left {
+	float: left;
+}
+.link-black {
+	color: #000;
+}
+.client-image {
+	background-size: contain;
+	background-repeat:no-repeat;
 }
 
 footer {
@@ -82,6 +106,7 @@ footer {
 footer ul {
     vertical-align: bottom;
     text-align: center;
+    margin-left: -25px;
 }
 
 ul:after,
@@ -100,4 +125,188 @@ li {
     margin: 22px;
     font-size: 16px;
     display: inline;
+}
+
+/* article stuff */
+.articleTitle {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-size: 50px;
+  line-height: 1.1;
+  color: #333;
+  margin-bottom: 16px;
+}
+.articleText {
+	text-align: left;
+}
+.articleText a {
+	color: #333;
+	text-decoration: underline;
+}
+.articleText a:hover {
+    color: #20b9e7;
+}
+.articleText p {
+	font-weight: 400;
+	font-style: normal;
+  	line-height: 30px;
+  	margin: 0;
+  	padding-bottom: 30px;
+  	color: #333;
+}
+.articleText li {
+	display: list-item;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 5px;
+}
+.articleText li p {
+	font-size: 22px;
+    line-height: 20px;
+}
+pre, code {
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: #f7f7f7;
+}
+pre {
+  padding: 8px 12px;
+  overflow-x: scroll;
+}
+
+code {
+  padding: 1px 5px;
+}
+
+.authorTitle {
+	font-size: 18px;
+	margin-bottom: 20px;
+}
+.logo-readium {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  font-size: 48px;
+  color: #000;
+  background-color: #FFF;
+  overflow: hidden;
+  z-index: 99;
+}
+.nolink {
+	font-size: 30px;
+	font-weight: bold;
+}
+.nolink a {
+	text-decoration: none;
+}
+.blogListDate {
+	font-size: 14px;
+  	color: #b3b3b1;
+  	line-height: 30px;
+}
+
+.blogList {
+	margin-top: 80px;
+}
+
+.listPost {
+	text-align: left;
+	padding: 40px 0;
+  border-bottom: 1px solid #f2f2f0;
+    line-height: 30px;
+  margin: 0;
+  padding-bottom: 30px;
+}
+
+.listPost a {
+	color: #333;
+	text-decoration: none;
+}
+.listPost a:hover {
+    color: #20b9e7;
+}
+
+/* media queries to make site responsive */
+@media screen and (max-width: 767px){
+	.content {
+		width: 320px;
+	}
+	.author-container  {
+		margin-left: 20px;
+	}
+	.image-container {
+		margin-left: 10px;
+	}
+	.instee-image {
+	width: 250px;
+	height: 150px;
+	}
+	.rocketdb-image {
+		margin-top: 50px;
+		width: 250px;
+		height: 150px;
+	}
+	.dsc-image {
+		width: 150px;
+		height: 150px;
+	}
+}
+@media screen and (min-width:768px){
+	.content {
+		width: 600px;
+	}
+	.author-container  {
+		margin-left: 150px;
+	}
+	.image-container {
+		margin-left: 10px;
+	}
+	.instee-image {
+		width: 150px;
+		height: 50px;
+	}
+	.rocketdb-image {
+		margin-top: 10px;
+		width: 150px;
+		height: 50px;
+	}
+	.dsc-image {
+		width: 50px;
+		height: 50px;
+	}
+}
+@media screen and (min-width:992px){
+	.content {
+		width: 900px;
+	}
+	.author-container  {
+		margin-left: 150px;
+	}
+	.image-container {
+		margin-left: 25px;
+	}
+	.instee-image {
+		width: 250px;
+		height: 150px;
+	}
+	.rocketdb-image {
+		margin-top: 50px;
+		width: 250px;
+		height: 150px;
+	}
+	.dsc-image {
+		width: 150px;
+		height: 150px;
+	}
+}
+@media screen and (min-width: 1300px){
+	.content {
+		width: 1200px;
+	}
+	.author-container {
+		margin-left: 250px;
+	}
+	.image-container {
+		margin-left: 85px;
+	}
 }

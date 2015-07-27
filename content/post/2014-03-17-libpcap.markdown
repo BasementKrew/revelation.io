@@ -1,0 +1,145 @@
+---
+title:  "Working with libpcap"
+date:   2014-03-17T10:00:00-07:00
+author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+summary: "Libpcap, the library that makes up the core of the defacto packet capturing software, Wireshark. Although there is a wealth of information online for using libpcap, much of it can be intimidating or dated. In this article we will go over the basics of libpcap and how to setup a simple packet capture."
+tags: libpcap, wireshark, packet, C, unix, posix
+---
+Libpcap is a wonderful little library written in the C programming language that abstracts out the low-level details of packet capturing on a network interface. It, along with the winpcap project make up the core components of how Wireshark does it's packet capturing. One might ask where exactly does libcap come from? Libpcap can find it's root with tcpdump, a program written in 1987 by Van Jacobson, Craig Leres and Steven McCanne. All of them were working for Lawerence Berkeley Laboratory at the time. You can still find tcpdump on quite a few unix distrubtions and is an excellent command line based packet analyzer. Sometime through the course of the tcpdump development, the low-level packet capturing, capture file reading, and file writing code was extracted out into it's own library, called libpcap.
+
+Now with the little history lesson out of the way, you might be wondering how libpcap actually analyzes packets from a particular interface? The answer can be found with the BSD Packet Filter introduced by Steven McCanne and Van Jacobson (seems these guys were really into network packets!). The Linux equivalent is the Linux Socket Filter. Both of these platforms ship with their respective OSes and in a drastic over simplification provide kernel drivers and supporting features that make acessing and filtering packet from the interface easy. Libpcap exist to abstract those lower level dependencies of each OSes' packet filter into a nice pretty little C API. With that out of the way, let's talk about to setup the bases of the packet filter.
+
+First thing we need to do is setup a way to pull the interfaces that we would like to capture on.
+
+{% highlight objective-c %}
+
+- (NSArray *)getInterfaces
+{
+    NSMutableArray *array = [NSMutableArray array];
+    char errbuf[PCAP_ERRBUF_SIZE];
+    pcap_if_t *devices;
+    int ret = pcap_findalldevs(&devices, errbuf);
+
+    if(ret != 0)
+    {
+        NSLog(@"[ERROR] %s", errbuf);
+        return nil;
+    }
+
+    struct pcap_if *device = devices;
+    while(device)
+    {
+        [array addObject:[NSString stringWithUTF8String:device->name]];
+        device = device->next;
+    }
+
+    pcap_freealldevs(devices);
+    return [array copy];
+}
+
+{% endhighlight %}
+
+Ok, I might have mislead you some what from my talks about C language above. This is in fact objective-C code (since I like it so much), but you should be able to easily swap out the little bit of Objective-C with a char buffer, vector or whatever collection suits your needs in your language. Also note you will need to make sure you are including the pcap headers and other C network headers. I will link an example with a list of them at the end of this article. Basically what we are doing here is creating an array, then looping over all the devices we got back from the `pcap_findalldevs` function call and adding those device/interface name into our array. Notice that `pcap_findalldevices` expects a error buffer and a pointer to the `pcap_if_t` structure, which we pass in as a reference to the function. Like most posix functions, it will return 0 if everything went well and some other number if an error occurred. Once our structure is filled up, we are free to loop over the devices which each contain a pointer to the next structure (linked list anyone?). Next we add each device to our array as we mentioned above. Once we have the interfaces, our next order of business is to setup the actual packet capturing piece.
+
+{% highlight objective-c %}
+
+static pcap_t* descr;
+static BOOL isCapture;
+
+- (void)capturePackets:(NSString *)interface
+{
+    isCapture = YES;
+    char errbuf[PCAP_ERRBUF_SIZE];
+
+    descr = pcap_create([interface UTF8String], errbuf);
+
+    if(descr == NULL)
+    {
+        NSLog(@"pcap_open(): %s\n",errbuf);
+        exit(1);
+    }
+
+    int act = pcap_activate(descr);
+
+    if(act != 0)
+    {
+        NSLog(@"pcap_activate(): %s\n",errbuf);
+        exit(1);
+    }
+
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul), ^{
+        pcap_loop(descr, 0, packet_callback, NULL);
+    });
+}
+
+{% endhighlight %}
+
+So the first thing we do here is initialize some variables. We have a boolean to make sure we don't try to start a capture on an interface that we are already capturing on. Like in the previous function, setup our error buffer in case we have any errors. We then call `pcap_create` and pass in the interface name we got back from the method we were discussing above. This will return us a descriptor which we pass to `pcap_activate` to get our packet capture started up. After this, we start our `pcap_loop` and set our `packet_callback` function that will get sent the packet data from that interface. Notice in this example we are dispatching this loop onto a background thread. This is because the loop will block the entire thread while it is running. If your application has a GUI, this is no bueno.
+
+Alright, that setups the packet capturing, now let's dig into that function pointer we just glossed over above.
+
+{% highlight objective-c %}
+
+void packet_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
+{
+    if(!isCapture)
+    {
+        if(descr)
+        {
+            NSLog(@"stop capturing...");
+            pcap_breakloop(descr);
+            pcap_close(descr);
+            descr = nil;
+        }
+    }
+
+    if(packet == NULL)
+    {
+        NSLog(@"Didn't grab packet\n");
+        return;
+    }
+
+    /* lets start with the ether header... */
+    struct ether_header *eptr = (struct ether_header *) packet;
+
+    /* check to see if we have an ip packet */
+    if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
+    {
+        char src[64];
+        char dst[64];
+        int sport = 0;
+        int dport = 0;
+        struct ip *iphdr = (struct ip*)(packet + ETHER_HDR_LEN);
+        inet_ntop(AF_INET, &iphdr->ip_src, src, sizeof(src));
+        inet_ntop(AF_INET, &iphdr->ip_dst, dst, sizeof(dst));
+        int ipHeaderSize = iphdr->ip_hl*sizeof(unsigned int);
+
+        NSLog(@"total length: %d",iphdr->ip_len);
+        if(iphdr->ip_p == IPPROTO_UDP)
+            NSLog(@"UDP action!");
+        else if(iphdr->ip_p == IPPROTO_TCP)
+        {
+            NSLog(@"TCP action! ");
+            struct tcphdr *tcpHeader = (struct tcphdr*) (iphdr + ipHeaderSize);
+            sport = ntohs(tcpHeader->th_sport);
+            dport = ntohs(tcpHeader->th_dport);
+            NSLog(@"src address is: %s:%d and dst address is: %s:%d\n", src, sport, dst, dport);
+        }
+    }
+    else if (ntohs (eptr->ether_type) == ETHERTYPE_ARP)
+        NSLog(@"Ethernet type hex:%x dec:%d is an ARP packet\n", ntohs(eptr->ether_type), ntohs(eptr->ether_type));
+    else
+        NSLog(@"Ethernet type %x not IP\n", ntohs(eptr->ether_type));
+}
+
+{% endhighlight %}
+
+Admittedly, this function does not really do anything other than log TCP packet's IP addresses and ports, but serves as a good example of what we can do with the data that libpcap is returning us. First thing we do is check to see if we have stopped the packet capture. If so, we go ahead and break our loop and shutdown the capture on our interface. Everything from here is a simple C network code for building a packet from the packet buffer of data we receive back from libpcap.
+
+Overall libpcap is a nifty little library that makes setting up a packet capture very simple. Of course we have only scratched the surface of what it can do. I will continue to write more articles on libpcap, as my current academica activities and general Apple fanchild nature, I am currently engaged in developing a fully native, Cocoa based packet capture client called Orca. You can find it [here](https://github.com/Vluxe/Orca) on Github. It is in the early stages of development, so if you would like to help out feel free to hit me up on [Twitter](https://twitter.com/acmacalister) or open an issue on Github [repo](https://github.com/Vluxe/Orca/issues). To see an example of the code we developed in this article, here is a [gist](https://gist.github.com/austiniam/9602154). With that, live long, prosper and capture packets well.
+
+[libpcap docs](http://www.tcpdump.org/manpages/pcap.3pcap.html#index)
+
+[tcpdump website](http://www.tcpdump.org/)
