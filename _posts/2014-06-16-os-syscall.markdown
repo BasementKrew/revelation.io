@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - OS & Syscall"
 date:   2014-06-16 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "In a rare twist of events not only two articles in the same week, but two packages in the same article! In this article we are going to spend some time pulling apart the os and syscall packages to see just what makes them tick."
 tags: Go, golang, packages, pkg, os, syscall, awesomeness, source
 ---

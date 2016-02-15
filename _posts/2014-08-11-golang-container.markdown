@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - Container"
 date:   2014-08-11 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "This week in our golang series we are going to be looking at some common data structures with some help from the container package."
 tags: Go, golang, packages, pkg, data structures, container
 ---

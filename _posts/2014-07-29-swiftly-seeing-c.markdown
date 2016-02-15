@@ -3,6 +3,7 @@ layout: post
 title:  "Swiftly Seeing C"
 date:   2014-07-29 10:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "This week we dig into some C and Core Foundation tips in Swift."
 tags: Objective-C, objc, apple, cocoa, websocket, osx, ios, swift, C, Core Foundation
 ---

@@ -3,6 +3,7 @@ layout: post
 title:  "Assembling into TCP"
 date:   2014-04-07 08:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "This week we continue our networking venture and unravel TCP."
 tags: TCP, networking, packets, segments, HTTP
 ---

@@ -2,37 +2,50 @@
 layout: default
 ---
 
-<section class="banner">
-  <div class="block block--hero block--touch" style="height: 100%; background-image: url(/images/hero.jpg);"  data-ext=".jpg">
-  <div class="heroTextBlock">
-    <p class="mainHeroText">Build Dreams</p>
-    <p class="secondHeroText">We are a team that builds dreams with software</p>
-  </div>
-</section>
+<div class="teaserimage">
+    <div class="teaserimage-image" {% if site.cover %}style="background-image: url({{ site.cover }})"{% endif %}>
+    </div>
+    <h1 class="teaser-text">Software That<br/>Doesn't Suck</h1>
+</div>
 
-<!--About Us Section-->
-<section class="mainSectionContainer">
-  <div class="container">
-    <p class="mainHeader topPad">About Us</p>
-    <p class="centerContent secondTextBlock topPad grayColor">A dream is the purest form of an idea. It is uncompromised quality and design. We believe software should be made the same way. We build dreams with software. <a src="#" class="greenColor">More...</a></p>
-    <div class="bottomPad"></div>
-  </div>
-</section>
+<header class="blog-header">
+    {% if site.logo %}
+      <a class="blog-logo" href="{{site.url}}" style="background-image: url('{{ site.logo }}')">{{ site.title }}</a>
+    {% endif %}
+    <h1 class="blog-title">{{ site.title }}</h1>
+    <h2 class="blog-description">{{ site.description }}</h2>
+    <div class="custom-links">
+      {% for social in site.social %}
+        {% if social.url %}
+            <a class="icon-{{ social.icon }}" href="{{ social.url }}">
+              <i class="fa fa-{{ social.icon }}"></i>
+            </a>
+            &nbsp;&nbsp;·&nbsp;&nbsp;
+        {% endif %}
+      {% endfor %}
+      <a href="/about/">About</a>
+    </div>
+</header>
 
-<section class="banner">
-  <div class="block block--hero block--touch" style="height: 100%; background-image: url(/images/hero.jpg);"  data-ext=".jpg"></div>
-</section>
 
-<!--App Section-->
-<section class="mainSectionContainer">
-  <div class="container">
-    <p class="mainHeader topPad">Apps</p>
-    <p class="centerContent secondTextBlock topPad grayColor">Some of our most recent creations.</p>
-    <div class="bottomPad"></div>
-  </div>
-</section>
+<main class="content" role="main">
 
-<!--Product carousal-->
-<section class="banner">
-  <div class="block block--hero block--touch" style="height: 100%; background-image: url(http://placehold.it/1920x1080);"  data-ext=".jpg"></div>
-</section>
+    <div class="cf frame">
+      {% for post in paginator.posts %}
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting" role="article">
+          <div class="article-item">
+            <header class="post-header">
+              <h2 class="post-title" itemprop="name"><a href="{{ post.url }}" itemprop="url">{{ post.title }}</a></h2>
+            </header>
+            <section class="post-excerpt" itemprop="description">
+              <p>{{ post.content | strip_html | truncatewords: 50 }}</p>
+            </section>
+            <div class="post-meta">
+              <time datetime="{{ post.date | date_to_long_string }}">{{ post.date | date_to_long_string }}</time>
+            </div>
+          <div>
+        </article>
+      {% endfor %}
+    </div>
+    {% include post_pagination.html %}
+</main>

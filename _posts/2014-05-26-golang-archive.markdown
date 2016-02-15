@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - Archive"
 date:   2014-05-26 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "This week I will be kicking off what some might call a new series. Starting today, each week I write, I will be reviewing a package out of the Go standard library."
 tags: Go, golang, packages, pkg, archive, tar, zip
 ---

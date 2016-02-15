@@ -3,6 +3,7 @@ layout: post
 title:  "Indirection with Pragmatic Protocols"
 date:   2014-04-21 08:00:00
 author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "Mixins and abstract classes and protocols, oh my! This week we cover indirection from the dynamic side of the house and see how it measures up against it's static cousins in the world of interfaces."
 tags: interfaces, indirection, golang, Go, Java, ruby, Objective-C, objc, python, protocols, mixin, modules, abstract
 ---

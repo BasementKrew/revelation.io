@@ -3,6 +3,7 @@ layout: post
 title:  "Gopher Go! - Builtin"
 date:   2014-06-30 08:00:00
 author: "<a href='http://austincherry.me'>Austin Cherry</a>"
+author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "Our journey through the documentation now lands us on the Builtin package. In today's article we will explore how the Builtin in package works."
 tags: Go, golang, packages, pkg, builtin, c, compiler
 ---

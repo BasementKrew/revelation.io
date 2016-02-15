@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
+
   {% include head.html %}
+
   <body>
-    {% include header.html %}
-    {{ content }}
+
+    <!-- content start -->
+
+    <div class="page-content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
+    </div>
+
+    <!-- content end -->
+
     {% include footer.html %}
+    {% include javascripts.html %}
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/vendor/js/custom.js"></script>
-    <script src="/vendor/js/bootstrap.js"></script>
-    <script src="/vendor/js/jquery.easing.1.3.js"></script>
-    <script defer src="/vendor/js/jquery.flexslider-min.js"></script>
-
-    <script src="/vendor/js/skel.min.js"></script>
-    <script src="/vendor/js/skel-panels.min.js"></script>
-    <script src="/vendor/js/init.js"></script>
-    <script src="/js/blog.js"></script>
   </body>
+
 </html>
