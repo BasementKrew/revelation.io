@@ -2,10 +2,10 @@
 layout: post
 title:  "Indirection with Idiomatic Interfaces"
 date:   2014-04-14 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
 summary: "Interfaces. Simply a language ideal or a powerful use of indirection? In this article we will explore the uses of interfaces and how different languages use them. We will also review how golang can use them to achieve some dynamic freedom in a static world."
-tags: interfaces, indirection, golang, Go, Java, ruby, Objective-C
+tags: comp-sci go
+keywords: interfaces indirection golang Go Java ruby Objective-C
+categories: 'austin'
 ---
 
 Alright, "Indirection with Idiomatic Interfaces", may be a little over doing it, but I needed a couple of cool "i" words to string together with "interfaces". On a more definitive note, interfaces do actually provide a nice layer of indirection or what most programmers would probably call abstraction. For those newer to computer science, those terms can seem a little vague so let's define them:

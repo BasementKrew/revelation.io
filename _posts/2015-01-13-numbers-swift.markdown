@@ -2,9 +2,9 @@
 layout: post
 title:  "Numbers and Swift"
 date:   2015-01-13 10:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
-tags: swift, scalar, type, int, double, char, number
+categories: 'dalton'
+tags: Swift
+keywords: swift scalar type int double char number
 ---
 
 2 + 2 = 4. Aren't numbers grand? They are the basic building blocks for all data we work with and Swift is no exception. Speaking (or typing) of numbers, I was working on [SwiftLog](https://github.com/daltoniam/SwiftLog) the other day and came across a `NSFileManager` call that returned a `NSNumber` in Objective-C and a `UInt64` in Swift. The different types inspired me to write this article. Objective-C only has `NSNumber` for a number object, while Swift has a whole list:

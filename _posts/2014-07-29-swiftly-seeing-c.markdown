@@ -2,10 +2,10 @@
 layout: post
 title:  "Swiftly Seeing C"
 date:   2014-07-29 10:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
+categories: 'dalton'
 summary: "This week we dig into some C and Core Foundation tips in Swift."
-tags: Objective-C, objc, apple, cocoa, websocket, osx, ios, swift, C, Core Foundation
+tags: Swift
+keywords: Objective-C objc apple cocoa websocket osx ios swift C Core Foundation
 ---
 
 After last week's break (vacations are fun!), we pick right back up on our Swift adventures. Last time we covered [websockets](working-with-websockets.html) and the latest addition to the open source family, [jetfire](https://github.com/acmacalister/jetfire). Now that the Objective-C version is finished, I felt the best way to learn about C and Core Foundation in Swift was to port [jetfire](https://github.com/acmacalister/jetfire). This new Swift version is appropriately named [starscream](https://github.com/daltoniam/starscream). Alright enough self promotion, onward to the examples!

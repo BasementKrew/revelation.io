@@ -2,10 +2,10 @@
 layout: post
 title:  "Gopher Go! - Container"
 date:   2014-08-11 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "This week in our golang series we are going to be looking at some common data structures with some help from the container package."
-tags: Go, golang, packages, pkg, data structures, container
+tags: Go
+keywords: Go golang packages pkg data structures container
 ---
 
 Ask any first year computer science student what they are learning and there is a good chance they will mention a popular data structure. As we all know, data structures are a pretty fundamental to programming and have been studied quite in depth. Instead of just looking at the basic data structures in the container package, I figured we might do something a bit more interesting and do some comparisons to see how they preform in practice. If you haven't had a chance to study data structures or their time complexities, I included some links at the bottom for some primer material.

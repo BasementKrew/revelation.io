@@ -3,8 +3,11 @@
 <!DOCTYPE html>
 <html>
   {% include head.html %}
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ "css/screen.css"  | prepend: site.baseurl  }}" />
+  <link rel="stylesheet" type="text/css"
+        href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
   <body itemscope itemtype="http://schema.org/Article">
-    {% include header.html %}
+    <a href="{{ site.baseurl }}" class="logo-readium"><i class="fa fa-home"></i></a>
     <main class="content" role="main">
       <article class="post">
         <div class="noarticleimage">
@@ -24,6 +27,9 @@
         </div>
       </article>
     </main>
-    {% include javascripts.html %}
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{{ "/assets/js/jquery.fitvids.js" | prepend: site.baseurl  }}"></script>
+    <script type="text/javascript" src="{{ "/assets/js/index.js" | prepend: site.baseurl  }}"></script>
   </body>
 </html>

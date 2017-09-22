@@ -2,10 +2,10 @@
 layout: post
 title:  "Gopher Go! - Builtin"
 date:   2014-06-30 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "Our journey through the documentation now lands us on the Builtin package. In today's article we will explore how the Builtin in package works."
-tags: Go, golang, packages, pkg, builtin, c, compiler
+tags: Go
+keywords: Go golang packages pkg builtin c compiler
 ---
 
 Ah, builtin in types and functions. They are what makes data computations go around in most languages and golang is no different. The builtin package is not so much a "package" as it is documentation for Go's different identifiers. You may have noticed this by the fact you don't have to import the builtin package to have access to all the types and functions list in the docs. Since there is much to cover in this package, let's talk a bit about how golang exactly implements these builtin types. For those who have been through the golang source, you will notice that the builtin package directory only has the one go file for documentation. If you are curious like me, you might be wondering where these types and functions are hiding out in the golang source. In a very anticlimactic turn of events, it was "builtin" (who would have figured?) to the golang compiler, `gc`. Alright, time for my usual disclaimer here. I tend to think of this meme when I get ready to science:

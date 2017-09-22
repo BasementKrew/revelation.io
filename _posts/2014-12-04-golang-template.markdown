@@ -2,10 +2,10 @@
 layout: post
 title:  "Gopher Go! - Template"
 date:   2014-12-04 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "Simple look at server side templating in Go."
-tags: Go, golang, packages, pkg, templating, mustache, rendering
+tags: Go
+keywords: Go golang packages pkg templating mustache rendering
 ---
 
 Templating is a pretty popular subject in web development today. If you have done any amount of web development, chances are you have worked with templates. The most popular types of templates that come to my mind are ERB templates in Ruby on Rails and Mustache templates. Below is a small sample of `html/template` and `mustache` templates in Go.

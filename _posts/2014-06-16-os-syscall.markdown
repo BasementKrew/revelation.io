@@ -2,10 +2,10 @@
 layout: post
 title:  "Gopher Go! - OS & Syscall"
 date:   2014-06-16 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "In a rare twist of events not only two articles in the same week, but two packages in the same article! In this article we are going to spend some time pulling apart the os and syscall packages to see just what makes them tick."
-tags: Go, golang, packages, pkg, os, syscall, awesomeness, source
+tags: Go
+keywords: Go golang packages pkg os syscall awesomeness source
 ---
 
 ah, Operating Systems. I could discuss them for hours, but since this is a golang series let's talk about it's os package. If you look at the overview of the os package in the documentation, it is very clear what the package is providing. A platform-independent interface to operating system functionality. This generally includes permissions, file reading/writing, interacting with processes, etc. The os package also has three subpackages: exec, signal and user. Each providing additional functionality for interacting with the os. The syscall package contains most of the platform-specific calls that the os package uses to get things done. Normally for the sake of portablity we tend to avoid making direct syscalls and use the higher level APIs found in the os package if at all possible. Since both the os and syscall packages have an exhaustive list of APIs and examples, doing thet same thing in this article would be wasteful. Instead, let's step through the source and find what makes these packages tick. For our example we are going to have a peak at the `Write` function in the os package and follow the darwin/OS X "path" of implementation. First things first, let's look at the implementation of that function:

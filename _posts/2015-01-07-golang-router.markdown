@@ -2,10 +2,10 @@
 layout: post
 title:  "Build your own Router in Go"
 date:   2015-1-07 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "Simple example of building a HTTP router in Go."
-tags: Go, golang, packages, net/http, http, router, mux
+tags: Go
+keywords: Go golang packages net/http http router mux
 ---
 
 As stated in the title of this article, we are going to build a router (also known as a mux) in Go. Now you might be asking why? There are a plethora of great routers out there so why "reinvent the wheel"? As a mentor of mine use to say "to learn how wheels work". So without further ado, let's jump in.

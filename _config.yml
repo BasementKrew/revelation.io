@@ -1,7 +1,7 @@
 # Build settings
 markdown: redcarpet
 highlighter: pygments
-permalink: none
+permalink: /:title.html
 paginate: 5
 
 # gems and other configs
@@ -9,7 +9,8 @@ gems: [jekyll-paginate]
 
 # Site settings
 title: "Vluxe"
-description: A never ending quest to create software that doesn't suck
+name: 'Vluxe'
+description: Simply Superb Software
 
 #blog logo
 logo: "/assets/images/logo.png"
@@ -18,6 +19,8 @@ cover: "/assets/images/plans.jpg"
 
 url: http://vluxe.io
 baseurl: /
+
+google_analytics: UA-52182448-1
 
 social:
   - icon: twitter
@@ -43,11 +46,17 @@ social:
 
 authors:
   - name: Dalton Cherry
+    slug: dalton
     url:  http://daltoniam.com
     image: http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320
+    twitter: daltoniam
+    location: Austin, Texas
     bio: Dalton Cherry. Developer. Disciple. Computer science aficionado. Mobile enthusiast. Drum machine. Paintball extraordinaire. The next American Ninja Warrior.
 
   - name: Austin Cherry
+    slug: austin
     url:  http://austincherry.me
-    image: http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320
+    twitter: acmacalister
+    location: Austin, Texas
+    image: https://s.gravatar.com/avatar/b318dde74289b9eb1cfdb0ecff012742?s=320
     bio: Master tactician. Defeated an entrie armada of klingon war birds. The true last samurai. Believer in Jesus. Music fanatic and guitar player extraordinaire.

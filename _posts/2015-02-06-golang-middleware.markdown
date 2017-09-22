@@ -2,10 +2,10 @@
 layout: post
 title:  "Making your own middleware in Go"
 date:   2015-02-06 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "Making middleware in Go."
-tags: Go, golang, packages, net/http, http, middleware
+tags: Go
+keywords: Go golang packages net/http http middleware
 ---
 
 Middleware is a popular word used in the computing landscape nowadays, but do we even know what it means? According to Google, middleware is "software that acts as a bridge between an operating system or database and applications, especially on a network". Many web frameworks provide the idea of middleware in their HTTP layers and Go is no exception. As with our router we built in a previous [article](/golang-router.html), making Go middleware is just as easy as implementing the `ServeHTTP` method in the `net/http` package.

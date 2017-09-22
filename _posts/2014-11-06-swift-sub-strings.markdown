@@ -2,10 +2,10 @@
 layout: post
 title:  "Swift Substrings"
 date:   2014-11-06 10:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
+categories: 'dalton'
 summary: "Swift Substrings"
-tags: apple, ios, swift, string, sub, osx, extension, index, range
+tags: Swift
+keywords: apple ios swift string sub osx extension index range
 ---
 
 This week we jump into the interesting world of Swift substrings. Creating substrings in Swift is quite different then the familiar `NSRange` substrings of the days of future past with Objective-C (yes, that was an attempt at an X-Men reference).

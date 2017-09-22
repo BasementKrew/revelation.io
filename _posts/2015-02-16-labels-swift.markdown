@@ -2,9 +2,9 @@
 layout: post
 title:  "Swift, Labels, Default Parameters, oh my!"
 date:   2015-02-16 10:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
-tags: swift, label, parameter, argument, method, function, default
+categories: 'dalton'
+tags: Swift
+keywords: swift label parameter argument method function default
 ---
 
 

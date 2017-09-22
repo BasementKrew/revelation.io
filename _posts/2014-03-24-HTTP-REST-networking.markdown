@@ -2,10 +2,10 @@
 layout: post
 title:  "HTTP and RESTful networking"
 date:   2014-03-24 08:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
+categories: 'dalton'
 summary: "Today we venture to dig down into the raw building blocks of HTTP and define what exactly RESTful means for a client side programmer."
-tags: HTTP, REST, ruby, rails, GET, POST, PUT, DELETE
+tags: HTTP TCP
+keywords: HTTP REST ruby rails GET POST PUT DELETE
 ---
 
 Using HTTP in a RESTful way. Arguable the most used design pattern and protocol in computer science today. Despite it's common use, have we ever taken the time to dig down and understand what is exactly happening under the hood?

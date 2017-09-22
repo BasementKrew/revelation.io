@@ -1,11 +1,12 @@
 ---
 layout: post
+cover: false
 title:  "JSON Serializing with the Objective-C Runtime"
 date:   2014-03-10 08:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "Despite the addition of NSJSONSerialization in iOS 5 and OSX 10.7, a lot of boilerplate can go into mapping the Foundation objects values to proper object properties. Lucky for us, Objective-C has a dynamic runtime to help us out."
-tags: JSON, foundation, serialize, parse, NSJSONSerialization
+tags: Objective-C
+keywords: JSON foundation serialize parse NSJSONSerialization
+categories: 'dalton'
 ---
 
 JSON is all the rage nowadays. It seems every major SaaS, framework, and language supports JSON and Objective-C is no exception. [Programmable Web](http://blog.programmableweb.com/2011/05/25/1-in-5-apis-say-bye-xml/) reported in 2011 that 1 in 5 new APIs are designed with JSON only.

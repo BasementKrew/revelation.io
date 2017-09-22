@@ -2,10 +2,10 @@
 layout: post
 title:  "Coaxing Concurrency"
 date:   2014-04-28 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "Concurreny is a hot topic in modern programming. In today's article we will cover some historical and possibly philosophical ideas behind concurrency. We will end our discussion with seeing how some of my favorite languages deal with the idea of concurrency."
-tags: concurrency, parallelism, threading, asynchronous, C, Objective-C, Python, Go, Golang
+tags: comp-sci
+keywords: concurrency parallelism threading asynchronous C Objective-C Python Go Golang
 ---
 
 Concurrency seems like something us as programmers hear every other day. Now that you have stumbled across this article you might be asking... why? Concurrency is not a new idea. Algol 68 (A programming language invented in 1968, hence the 68) included some concurrent features. 1968 was 46 years ago, that is almost half a century. Men hadn't even walked on the moon yet. Computing has grown leaps and bounds since then, so why are we still talking about this idea of concurrency? The relatively recent phenomenon comes from the rise of the multicore processors toward the tail end of the 2000s. Multicore processors have become the standard as single core processors had hit what many called a "power wall". Some might remember the abandonment of the Pentium 4 line because of it's thermal problems. Intel couldn't keep the processor cool at the higher clock rates, so they did what anyone would do, add more processors per chip. This change in hardware design resparked the dicussions of concurrent programming or more accurately worded, parallel programming. There is a lot of talk on the interwebs about the difference between parallelism and concurrency. Let me offer a simple way of how I would sum it up. Parallelism is a form of concurrency. Concurrency in it's english definition, means something is existing or happening at the same time. In computer science we might translate this as having more than one active execution context or more than one "thread of control". Parallelism on the other hand, has a bit more narrow definition. It usually means more than one task can be physically active at once, meaning we need more than one processor. Distributed systems take this one step further, by having devices that are physically separated from another in the real world, but still doing the same work. This can be visualized as a single application running across multiple servers.

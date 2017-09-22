@@ -2,10 +2,10 @@
 layout: post
 title:  "Working With Websockets"
 date:   2014-07-07 10:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
 summary: "Despite all the Swift we have been having, we haven't forsaken Objective-C. This week we break down the websocket protocol by exploring the newest Objective-C websocket library, jetfire."
-tags: Objective-C, objc, apple, cocoa, websocket, osx, ios
+tags: Objective-C
+keywords: Objective-C objc apple cocoa websocket osx ios
+categories: 'dalton'
 ---
 
 The world needs websockets! The rise of realtime applications on the web, desktop, and mobile all but demands it. Ok, that might be a bit theatric, but certainly we can all agree that there has been a significant growth in realtime needs in the last 5 years. The websocket protocol answers this call and is now the supported standard in all major web browsers. This is huge, as it means all platforms can do realtime over the same protocol. Let's jump in!

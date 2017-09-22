@@ -2,10 +2,10 @@
 layout: post
 title:  "Stylish Swift"
 date:   2014-06-23 10:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
+categories: 'dalton'
 summary: "Now that swift is a few weeks old, we jump into some tips and tricks to maximize your swift style."
-tags: Objective-C, objc, swift, apple, cocoa, tips, tricks, best, practice, help, style
+tags: Swift
+keywords: Objective-C objc swift apple cocoa tips tricks best practice help style
 ---
 
 Stylish code is something we all should strive for. It is a topic that is constantly debated and is heavily influenced by personal preference. It also varies between languages on what is considered "stylish". Swift is still young and changing language, so it's style is still developing. Swift has different language that influenced it, thus some style and patterns can be derived from them. Since code is king, lets jump right in.

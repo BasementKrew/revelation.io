@@ -2,10 +2,10 @@
 layout: post
 title:  "Indirection with Pragmatic Protocols"
 date:   2014-04-21 08:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
+categories: 'dalton'
 summary: "Mixins and abstract classes and protocols, oh my! This week we cover indirection from the dynamic side of the house and see how it measures up against it's static cousins in the world of interfaces."
-tags: interfaces, indirection, golang, Go, Java, ruby, Objective-C, objc, python, protocols, mixin, modules, abstract
+tags: comp-sci protocols
+keywords: interfaces indirection golang Go Java ruby Objective-C objc python protocols mixin modules abstract
 ---
 
 Following up on our interface article from last week (check it out [here](indirection-idiomatic-interfaces.html) if you missed it), today we cover the dynamic cousin of interfaces, protocols. Now it is important to note that in this article we use the term "protocol" to encompass all the forms of indirection in different dynamic languages. Ruby has mixins and modules, Python has abstract classes and multiple inheritance and Objective-C has protocols. Now those are a lot of terms, to keep things clear we will just refer to all of them as protocols (because I am a Objective-C guy!).

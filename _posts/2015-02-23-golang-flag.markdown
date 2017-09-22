@@ -2,10 +2,10 @@
 layout: post
 title:  "Gopher Go! - Flag"
 date:   2015-02-23 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "Picking up where we left off in our golang series, today we will be reviewing the flag package."
-tags: Go, golang, packages, net/http, flag, flags, unix, gnu
+tags: Go
+keywords: Go golang packages net/http flag flags unix gnu
 ---
 
 Flags are a well rooted Unix tradition. Chances are if you have been programming on a Unix based platform for any length of time, you have had to use flags to configure behavior of different command line utilities. For those with a background in C programming, you know how tedious and time consuming it can be to properly parse flags. Luckily in Go, we have a simple package in the standard library to do this for us.

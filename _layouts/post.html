@@ -1,62 +1,113 @@
 ---
+layout: default
+class: 'post-template'
 ---
-<!DOCTYPE html>
-<html>
-  {% include head.html %}
-  <body itemscope itemtype="http://schema.org/Article">
-    {% include header.html %}
-    {% if page.confetti %}
-    <canvas id="world"></canvas>
-    {% endif %}
-    <main class="content" role="main">
-      <article class="post">
-        <div class="noarticleimage">
-          <div class="post-meta">
+<header class="main-header post-head {% if page.cover %}" style="background-image: url({{ site.baseurl }}{{ page.cover }}) {% else %}no-cover{% endif %}">
+    <nav class="main-nav {% if page.cover %} overlay {% endif %} clearfix">
+        {% if page.logo %}<a class="blog-logo" href="{{ site.baseurl }}"><img src="{{ site.baseurl }}{{ page.logo }}" alt="Blog Logo" /></a>{% endif %}
+        {% if page.navigation %}
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+        {% else %}
+        <a href="{{ site.baseurl }}" class="logo-readium"><i class="fa fa-home"></i></a> 
+        {% endif %}
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post {{ page.subclass }}">
+
+        <header class="post-header">
             <h1 class="post-title">{{ page.title }}</h1>
-            <div class="cf post-meta-text">
-              <div class="author-image" style="background-image: url({{ page.author_image }})">Blog Logo</div>
-              <h4 class="author-name" itemprop="author" itemscope itemtype="http://schema.org/Person">{{ page.author }}</h4>
-              on
-              <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date_to_string }}</time>
-            </div>
-          </div>
-        </div>
-        <br>
-        <br>
-        <br>
-        <section class="post-content">
-          <div class="post-reading">
-            <span class="post-reading-time"></span> read
-          </div>
-          <a name="topofpage"></a>
-          {{content}}
-        </section>
-        <div class="bottom-teaser cf">
-          <div class="isLeft">
-            <h5 class="index-headline featured"><span>Written by</span></h5>
-            <section class="author">
-              <div class="author-image" style="background-image: url({{page.author_image}})">Blog Logo</div>
-              <h4>{{ page.author }}</h4>
-              <p class="bio">{{page.bio}}</p>
-              <hr>
-              <p class="published">Published <time datetime="{{ page.date | date: "%F %R" }}">{{ page.date | date_to_string }}</time></p>
+            <section class="post-meta">
+            <!-- <a href='{{ site.baseurl }}{{ page.about }}'>{{ site.author }}</a> -->
+            <time class="post-date" datetime="{{ page.date | date:'%Y-%m-%d' }}">{{ page.date | date_to_string }}</time>
+                <!-- [[tags prefix=" on "]] -->
+                {% if page.tags.size > 0 %} 
+                on 
+                {% for tag in page.tags %}
+                    {% if forloop.index == page.tags.size %}
+                       <a href='{{ site.baseurl }}tag/{{ tag | downcase }}'>{{ tag}}</a>
+                    {% else %}
+                       <a href='{{ site.baseurl }}tag/{{ tag | downcase }}'>{{ tag}}</a>,
+                    {% endif %}   
+                {% endfor %}
+                {% endif %}
             </section>
-          </div>
-          {{/post}}
-          <div class="isRight">
-            <h5 class="index-headline featured"><span>Supported by</span></h5>
-            <footer class="site-footer">
-              <section class="poweredby">Theme provided by <a href="https://twitter.com/dirkfabisch">@dirkfabisch</a></section>
-              <a class="subscribe" href="{{ "/feed.xml" | prepend: site.baseurl }}"> <span class="tooltip"> <i class="fa fa-rss"></i> Subscribe to the RSS Feed.</span></a>
-              <div class="inner">
-                <br />
-                <section class="copyright">Created by <a href="http://austincherry.me">Austin</a> and <a href="http://daltoniam.com">Dalton Cherry</a>, and released under a <a href="http://creativecommons.org/licenses/by-nc/3.0/" rel="license">Creative Commons BY-NC License</a></section>
-              </div>
-            </footer>
-          </div>
-        </div>
-      </article>
-    </main>
-    {% include javascripts.html %}
-  </body>
-</html>
+        </header>
+
+        <section class="post-content">
+            
+            {{ content }}
+
+        </section>
+
+        <footer class="post-footer">
+
+            <!-- Everything inside the #author tags pulls data from the author -->
+            <!-- #author-->
+            {% for author in site.authors %}
+            {% if page.categories[0] == author.slug %}
+                {% if author.image %}
+                <figure class="author-image">
+                    <a class="img" href="{{ site.baseurl }}author/{{ author.slug }}" style="background-image: url({{ author.image }})"><span class="hidden">{{ author.name }}'s Picture</span></a>
+                </figure>
+                {% endif %}
+
+                <section class="author">
+                    <h4><a href="{{ site.baseurl }}author/{{ author.slug }}">{{ author.name }}</a></h4>
+                
+                    {% if author.bio %}
+                        <p> {{ author.bio }}</p>
+                    {% else %}
+                        <p>Read <a href="{{ site.baseurl }}author/{{ author.slug }}">more posts</a> by this author.</p>
+                    {% endif %}
+                    <div class="author-meta">
+                        {% if author.location %}<span class="author-location icon-location"> {{ author.location }}</span>{% endif %} 
+                        {% if author.url %}<span class="author-link icon-link"><a href="{{ author.url }}"> {{ author.url }}</a></span>{% endif %}
+                        {% if author.twitter %}<span class="author-twitter icon-twitter"><a href="https://twitter.com/{{ author.twitter }}"> @{{ author.twitter }}</a></span>{% endif %} 
+                    </div>
+                </section>
+            {% endif %}
+            {% endfor %}
+
+            <!-- /author  -->
+
+            <section class="share">
+                <h4>Follow Us</h4>
+                <a class="icon-twitter" href="https://twitter.com/vluxeio"></a>
+                <a class="icon-email" href="mailto:dalton@vluxe.io"><i class="fa fa-envelope"></i></a>
+                <a class="icon-github" href="https://github.com/Vluxe"><i class="fa fa-github"></i></a>
+            </section>
+            
+        </footer>
+
+    </article>
+
+</main>
+
+<aside class="read-next">
+
+    <!-- [[! next_post ]] -->{{ post.url | remove: '/' }}
+    {% if page.next %}
+        <a class="read-next-story {% if page.next.cover %}" style="background-image: url({{ site.baseurl }}{{ page.next.cover }}){% else %}no-cover{% endif %}" href="{{ site.baseurl }}{{ page.next.url | remove: '/' }}">
+            <section class="post">
+                <h2>{{ page.next.title }}</h2>
+                <p>{{ page.next.content | strip_html | truncatewords:15 }}</p>
+            </section>
+        </a>
+    {% endif %}
+    <!-- [[! /next_post ]] -->
+    <!-- [[! prev_post ]] -->
+    {% if page.previous %}
+        <a class="read-next-story prev {% if page.previous.cover %}" style="background-image: url({{ site.baseurl }}{{ page.previous.cover }}){% else %}no-cover{% endif %}" href="{{ site.baseurl }}{{ page.previous.url | remove: '/' }}">
+            <section class="post">
+                <h2>{{ page.previous.title }}</h2>
+                <p>{{ page.previous.content | strip_html | truncatewords:15 }}</p>
+            </section>
+        </a>
+    {% endif %}
+    <!-- [[! /prev_post ]] -->
+</aside>
+
+<!-- /post -->

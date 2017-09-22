@@ -2,10 +2,10 @@
 layout: post
 title:  "Gopher Go! - Debug"
 date:   2015-03-12 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "Today's adventures will include spelunking through Go binaries to see what interesting tidbits we turn up."
-tags: Go, golang, packages, debug, compilers, compiling, gc, unix, linux, executables
+tags: Go
+keywords: Go golang packages debug compilers compiling gc unix linux executables
 ---
 
 Instead of our usual brief overview of a golang package with some example code, we are going to something a bit more interesting. We are going to do some amateur level pulling apart of a compiled golang program. If you have experience with compilers and computer architectures, this article might be very fundamental to you. If you haven't, buckle up and let's take a ride to the unknown!

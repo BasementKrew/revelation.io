@@ -2,10 +2,10 @@
 layout: post
 title:  "Submerged into Swift"
 date:   2014-06-08 10:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
+categories: 'dalton'
 summary: "Now that WWDC, has finished up, we get back in the swing of things with a in depth look at swift."
-tags: Objective-C, objc, swift, wwdc, missed, week, apple, cocoa
+tags: Swift
+keywords: Objective-C objc swift wwdc missed week apple cocoa
 ---
 
 Now with WWDC in our rear view mirror (always a great conference to attend), we turn our focus to exploring one of tge biggest announcements of the conference, Swift. Swift is Apple's new language that is "Objective-C without the C". When I first heard this, I was a bit shaken. It is no secret that I am a pretty big fan of C and Objective-C and this announcement almost felt like a betrayal of those core languages. Ok, that might be a touch dramatic, but Swift was going to take some time for me to adjust to. I felt it was only fair to give the language a full try and compare and contrast the differences with Objective-C and see how it fairs for its first release. I started digging through the Swift source files and created a simple HTTP library to give myself a solid Swift base with APIs I was already familiar with, before I casted my judgmental C loving eyes upon it. Here is what I found:

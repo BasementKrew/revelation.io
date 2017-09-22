@@ -2,10 +2,10 @@
 layout: post
 title:  "Assembling into TCP"
 date:   2014-04-07 08:00:00
-author: "<a href='http://daltoniam.com'>Dalton Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320"
+categories: 'dalton'
 summary: "This week we continue our networking venture and unravel TCP."
-tags: TCP, networking, packets, segments, HTTP
+tags: TCP HTTP
+keywords: TCP networking packets segments HTTP
 ---
 
 As promised from the [HTTP article](HTTP-REST-networking.html), we continue our digging into TCP. For a quick refresher, TCP stands for "Transmission Control Protocol". It is the core of networking done today and is by far the most popular protocol. Why is TCP so popular? Let's find out!

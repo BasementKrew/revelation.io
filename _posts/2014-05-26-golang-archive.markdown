@@ -2,10 +2,10 @@
 layout: post
 title:  "Gopher Go! - Archive"
 date:   2014-05-26 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "This week I will be kicking off what some might call a new series. Starting today, each week I write, I will be reviewing a package out of the Go standard library."
-tags: Go, golang, packages, pkg, archive, tar, zip
+tags: Go
+keywords: Go golang packages pkg archive tar zip
 ---
 
 It's no secret that I have been actively learning golang. I have to say it is probably one of my favorite languages to date. I have always wanted a language that's syntax and speed were close to the ballpark of C, but easy enough to write like other high productivity languages such as Ruby, Python, Java, etc. I have had many discussions with my brother on possibly writing a language like this and when I started exploring Go, I feel like it just "fits the bill". Unfortunately, being an iOS developer at my current company and our web team being a devout Ruby on Rails shop, my time to spend with Go is mostly limited to side projects. That being said, I thought there would be no better way to really sink my teeth into the language then to sit down and explore each package in the Go standard library. Since I'm just starting this adventure I figured I should share my finding with the rest of the world and hopefully get feedback that can improve me and the community as a whole. If you don't currently know Go, but would like to follow along with this little quest, I have included some resources at the end of this article to get you started. Now, without farther ado, let's dive in.

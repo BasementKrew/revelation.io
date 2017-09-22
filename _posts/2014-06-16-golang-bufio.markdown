@@ -2,10 +2,10 @@
 layout: post
 title:  "Gopher Go! - Bufio"
 date:   2014-06-16 08:00:00
-author: "<a href='http://austincherry.me'>Austin Cherry</a>"
-author_image: "http://www.gravatar.com/avatar/4278893e11f873d60fede435f1ae08aa.png?r=x&amp;s=320"
+categories: 'austin'
 summary: "Continuing our golang series, we follow with the next package after archive, bufio."
-tags: Go, golang, packages, pkg, bufio, buffered, unbuffered, io
+tags: Go
+keywords: Go golang packages pkg bufio buffered unbuffered io
 ---
 
 This week in our golang series we are covering the bufio package. Before we jump straight into the package, let's have a quick overview of what buffered vs unbuffered I/O is. The key difference is the use of a buffer or not when reading or writing to a file (hence the buffered part). What we mean by with the term "buffer", is there is basically a place we read or write our bytes to before we actually make a system call to put them on a physically medium, like the hard disk. This is useful when working with large files as we buffer up our data in chunks to reduce the amount of memory usage as well as the write and read calls. With that out of the way, let's see how Go does it, by splunking through it's source.
