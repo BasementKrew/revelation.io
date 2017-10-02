@@ -10,11 +10,11 @@ navigation: True
 ---
 
 
-We are back! Wow has it really been two years? Ironically our last post was celebrating the one year mark and new things to come and then radio silence... 
+We are back! Wow has it really been two years? Ironically our last post was celebrating the one year mark with new things to come and then... radio silence.
 
-Alas, we missed you all and we are back with a fresh new design and content. This week I wanted to cover Swift 4's `Codable` protocol. I know, I can hear your groans now about another `Codable` article, but I wanted to use this article to showcase `Codable` in a practical HTTP API setting. Plus it gives me the excuse to show off the new version 3 of [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP) and to offically deprecate [JSONJoy](https://github.com/daltoniam/JSONJoy-Swift) (Apple decided to create even more joy).
+Alas, we missed y'all and are back with a fresh new design and content. This week I wanted to cover Swift 4's `Codable` protocol. I know, I can hear your groans now about another `Codable` article, but I wanted to use this article to showcase `Codable` in a practical HTTP API setting. Plus it gives me the excuse to show off the new version 3 of [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP) and to officially deprecate [JSONJoy](https://github.com/daltoniam/JSONJoy-Swift) (Apple decided to create even more joy, lame pun intended).
 
-First off, if you want a great technical explanation of the `Codable` protocol, please check out Mike Ash's wonderful [post](https://www.mikeash.com/pyblog/friday-qa-2017-07-14-swiftcodable.html) about it. I am going to focus on a more high level and example driven implementation, so without further ramblings, example time!
+First off, if you want a great technical explanation of the `Codable` protocol, please check out Mike Ash's wonderful [post](https://www.mikeash.com/pyblog/friday-qa-2017-07-14-swiftcodable.html). I am going to focus on high level details with examples to drive home the point. Without any further ramblings, example time!
 
 
  Let's write a quick web server in Go (because we like Go and it gives us a full example to work with).
@@ -38,7 +38,7 @@ func main() {
 }
 ```
 
-That code is fairly straight forward. Any request it gets it send back some JSON that says "OK". Now onto the Swift!
+That code is fairly straight forward. Any request received sends back some JSON that says "OK". Now onto the Swift!
 
 We create a struct that implements the `Codable` protocol.
 
@@ -48,7 +48,7 @@ struct Response: Codable {
 }
 ```
 
-That's it! Most default cases this will handle our JSON needs and it should be able to create our model off those properties. Now let's hook this up to our SwiftHTTP web request.
+That's it! This will handle most cases and should create our model off those properties. Now let's hook this up to our SwiftHTTP web request.
 
 ```swift
 HTTP.GET("http://localhost:8080/bar") { response in
@@ -65,7 +65,7 @@ HTTP.GET("http://localhost:8080/bar") { response in
     }
 }
 ``` 
-Now I'm sure you have questions about the edge cases on JSON parsing with this simple example. I know you are thinking: "what about handling JSON's snake case vs Swift's camel case"? "How do I handle arrays"? "What about side loaded models?" "how about dates"? I said this article was practical did I not? We got examples for all those cases. Stacks of examples. Ok, only four of them, but enjoy them none the less!
+Now I'm sure you have questions about some of the edge cases JSON parsing presents with this simple example. You are probably thinking: "what about handling JSON's snake case vs Swift's camel case"? "How do I handle arrays"? "What about side loaded models?" "how about dates"? I said this article was practical, didn't I? We have examples for all those cases below. Actually, stacks and stacks of examples. OK, OK, only four of them, but enjoy them none the less!
 
 ### Casing
 
@@ -92,7 +92,7 @@ struct User: Codable {
 }
 ```
 
-These properties unfortunately don't map since their names are different. We could name just change our Swift (or JSON) properties to match, but that looks ugly and feels akward when everything else is camel case in Swift. We can easily fix that by changing our Swift model to include:
+These properties unfortunately don't map since their names are different. We could name just change our Swift (or JSON) properties to match, but that looks ugly and feels awkward when everything else is camel cased in Swift. We can easily fix that by changing our Swift model to include:
 
 ```swift
 struct User: Codable {
@@ -109,11 +109,11 @@ struct User: Codable {
 }
 ```
 
-That takes care of that. Now we can keep our code looking consistent and pretty. The main cavet here is we have to include all of our properties names in the `CodingKeys` enum even if we only need to change one property mapping. 
+That takes care of that. Now we can keep our code looking consistent and pretty. The main caveat here is we have to include _all_ of our properties names in the `CodingKeys` enum even if we only need to change one property mapping. 
 
 ### Arrays
 
-Now parsing Array's is very straight forward. Take the JSON from this API: https://jsonplaceholder.typicode.com/photos. If you are to lazy to click or tap that link here is an example:
+The good news is parsing Array's is very straight forward. Take the JSON from this API: [https://jsonplaceholder.typicode.com/photos](https://jsonplaceholder.typicode.com/photos). If you are too lazy to click or tap that link here is an example:
 
 ```javascript
 [
@@ -210,7 +210,7 @@ The default for `dateDecodingStrategy` is `deferredToDate`. The [docs](https://d
 
 ### Side loaded models
 
-Now we bring it all together with a side loaded model. 
+We can bring it all home with some side loaded models. 
 
 ```javascript
 {
@@ -253,7 +253,7 @@ struct Response: Codable {
 }
 ```
 
-Now for the request:
+And... the request:
 
 ```swift
 HTTP.GET("http://localhost:8080/bar") { response in
@@ -275,11 +275,11 @@ HTTP.GET("http://localhost:8080/bar") { response in
     }
 }
 ``` 
-Fairly anti climax since it is the last example, but it does show case how easy it is to implement `Codable`. 
+Fairly anticlimactic for the last example, but it does showcase how easy it is to implement `Codable`. 
 
 ### End
 
-I am quite excited about the `Codable` protocol so far and it does eliminate quite a bit of the standard boilerplate with JSON parsing in Swift. I am also excited to get back to blogging and we are going to try and keep the momentum going. Austin has some fun Go things coming up next to keep the content flowing with the hope for a bi-weekly schedule of posting, so [follow](https://twitter.com/vluxeio) the Vluxe twitter account to keep in the loop (or in youtube terms... SHARE, LIKE, AND SUBSCRIBE). We will talk (write?) to y'all soon.  
+I'm quite excited about the `Codable` protocol and the fact that it eliminate tons of boilerplate with JSON parsing in Swift. I'm also thrilled to be blogging again and we are going to try and keep the momentum going. Austin has some fun Go things coming up next to keep the content flowing with the hope for a bi-weekly schedule. If you want to stay in the loop, go [follow](https://twitter.com/vluxeio) the Vluxe twitter account (or in Youtuber terms... SHARE, LIKE, AND SUBSCRIBE). We will talk (write?) to y'all soon.  
 
 - [Mike Ash's technical post](https://www.mikeash.com/pyblog/friday-qa-2017-07-14-swiftcodable.html)
 - [Apple's encoding doc](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types)
