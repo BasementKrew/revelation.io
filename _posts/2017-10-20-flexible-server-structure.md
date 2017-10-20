@@ -79,7 +79,7 @@ func (s *Server) HolaHandler(w http.ResponseWriter, r *http.Request) {
 }
 ``` 
 
-Now I admit we don't have to design things this way and could avoid this problem if we created additional "Server/Handler" types, but too can get a little redundant. Here is my suggestion to avoid this:
+Notice how every handler is a "method" on the `Server` struct? That can lead to things being fragile and inflexible. Now I admit we don't have to design things this way and we could avoid this problem if we created additional "Server/Handler" types, but that too can get a little redundant. Here is my suggestion to avoid this:
 
 ```go
 type Server struct {
@@ -137,7 +137,7 @@ func HolaHandler(s *Server) http.Handler {
 }
 ```
 
-Here is what I like about this approach. Just like with our earlier structure, we are still avoid global state. While I think arguably this is a little bit tougher to reason through the extra layer of `http.HanderFunc`s, I feel the flexibility is worth it. We no longer have all the handlers tied to `struct` with all of our shared resources. We have the freedom to inject whatever parameters we would like. For example, let's say some of the handlers need to access an ElasticSearch server, but we didn't want to necessarily add that to one of our server types. In the initial app structure, we would have to create another will all of the resources the HTTP handler would need access to. With this approach, you could simply just pass along the ElasticSearch connection as another parameter and you are off to the races. I think probably the most powerful part of this design is it opens up the ability to use interfaces. For example:
+Here is what I like about this approach. Just like with our earlier structure, we are still avoiding global state. While I think arguably this is a little bit tougher to reason through with the extra layer of `http.HanderFunc`s, I feel the flexibility is worth it. We no longer have all the handlers tied to `struct` for our application's shared resources. Instead, we have the freedom to pass them as parameters. For example, let's say one of our handlers needs to access an ElasticSearch server, but we don't necessarily  want to add that to one of our `struct` types. In the first example, we would either have to create another type or add it our existing `struct` where the HTTP handler needed it or not. Bummer. With this approach, you could simply just pass along the ElasticSearch connection as another parameter and you are off to the races. I think probably the most powerful part of this design is it opens up the ability to use interfaces. For example:
 
 ```go
 type Server interface {
