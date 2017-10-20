@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Superior Server Structs in Go"
-date:   2017-10-02 12:30:00
+date:   2017-10-20 12:30:00
 categories: 'austin'
 tags: Go
 keywords: golang http server structs design patterns
@@ -19,13 +19,13 @@ type HelloHandler struct {
 func (h *HelloHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     var name string
     // Execute the query.
-    row := h.db.QueryRow(“SELECT myname FROM mytable”)
+    row := h.db.QueryRow("SELECT myname FROM mytable")
     if err := row.Scan(&name); err != nil {
         http.Error(w, err.Error(), 500)
         return
     }
     // Write it back to the client.
-    fmt.Fprintf(w, “hi %s!\n”, name)
+    fmt.Fprintf(w, "hi %s!\n", name)
 }
 ```
 
