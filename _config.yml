@@ -5,7 +5,8 @@ permalink: /:title.html
 paginate: 5
 
 # gems and other configs
-gems: [jekyll-paginate]
+plugins:
+  - jekyll-paginate 
 
 # Site settings
 title: "Vluxe"
@@ -48,15 +49,15 @@ social:
 authors:
   - name: Dalton Cherry
     slug: dalton
-    url:  http://daltoniam.com
-    image: http://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320
+    url:  https://daltoniam.com
+    image: https://www.gravatar.com/avatar/2fdc7b889f35118a7334187b15c5b957.png?r=x&amp;s=320
     twitter: daltoniam
     location: Austin, Texas
     bio: Dalton Cherry. Developer. Disciple. Computer science aficionado. Mobile enthusiast. Drum machine. Rock climbing and frisbee extraordinaire. The next American Ninja Warrior.
 
   - name: Austin Cherry
     slug: austin
-    url:  http://austincherry.me
+    url:  https://austincherry.me
     twitter: acmacalister
     location: Austin, Texas
     image: https://s.gravatar.com/avatar/b318dde74289b9eb1cfdb0ecff012742?s=320
