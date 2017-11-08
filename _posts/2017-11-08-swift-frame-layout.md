@@ -48,7 +48,7 @@ class TestView: UIView {
 }
 ```
 
-Now the first thing to notice is the `layoutSubviews` method. This is where we will do the layout for our subviews (like our labels). We add all of our subviews frame layouts inside this method. Here is that code:
+Now the first thing to notice is the `layoutSubviews` method. This is where we will do the layout for our subviews (like our labels). We add all of our subviews' frame layouts inside this method. Here is that code:
 
 ```swift
 override func layoutSubviews() {
@@ -62,7 +62,7 @@ override func layoutSubviews() {
 }
 ```
 
-Pretty simple, eh? (side note, can I use `eh` even though I'm not Canadian?). The first thing to note is on iOS the view coordinate system starts in the top left corner (0,0). This means adding any value to `x` or `y` will move the view down (y) or to the right (x). The width and height do exactly what you would expect and give the view its size. The call to `bounds` is asking the parent view (our subclass `TestView`) how big it is and laying out the subviews accordingly. We use pad to make the math easy and have even spacing on both the left and right side of the label. This is why the `bounds.width - (pad * 2)` has times 2 of `pad`. The view moved to the right 5 points to the right and thus we take 10 points from the width to account for it and add the same amount of spacing on the left. Now all we need to do is add `TestView` to our view hierarchy.
+Pretty simple, eh? (side note, can I use `eh` even though I'm not Canadian?). The first thing to note is on iOS the view coordinate system starts in the top left corner (0,0). This means adding any value to `x` or `y` will move the view down (y) or to the right (x). The width and height do exactly what you would expect and give the view it's size. The call to `bounds` is asking the parent view (our subclass `TestView`) how big it is and laying out the subviews accordingly. We use pad to make the math easy and have even spacing on both the left and right side of the label. This is why the `bounds.width - (pad * 2)` has times 2 of `pad`. The view moved to the right 5 points and thus we take 10 points from the width to account for it and add the same amount of spacing on the left. Now, all we need to do is add `TestView` to our view hierarchy.
 
  ```swift
  //I add this code in my viewController's viewDidLoad
@@ -87,7 +87,7 @@ UIView.animate(withDuration: 0.25, animations: {
 
  ![](/assets/images/frame-layout-first-animation.gif)
 
-That is it. We don't have to mess around with updating constraints (unless we are mixing the two systems, more on that at the end). We just update the view and it does its thing. We can also animate the `transform` property to do simple rotation and expanding animations as seen here:
+That is it. We don't have to mess around with updating constraints (unless we are mixing the two systems, more on that at the end). We just update the view and it does it's thing. We can also animate the `transform` property to do simple rotation and expanding animations as seen here:
 
 ```swift
 UIView.animate(withDuration: 0.25, animations: {
@@ -98,9 +98,9 @@ UIView.animate(withDuration: 0.25, animations: {
  ![](/assets/images/frame-layout-second-animation.gif)
 
 
-Now this is only the start in some of the things that can be accomplished with frame layouts. The main takeaway here is frame layouts can be a valuable tool when developing views that might have extensive animations or highly custom UI and/or UX. This of course comes with the trade off of having to manage your own layouts mathematically which might be more cognitive overhead when dealing with things like rotation, size classes, different layouts for different devices, etc. The other neat thing is you can actually mix both frame layout views and Auto Layout managed views with just a few properties. You can find more info about that in Apple's WWDC talk [here](https://developer.apple.com/videos/play/wwdc2015/219/) but just a quick TLDR; it centers around the `translatesAutoresizingMaskIntoConstraints` property. The documentation for that can be found [here](https://developer.apple.com/documentation/uikit/uiview/1622572-translatesautoresizingmaskintoco).
+Now this only scratched the surface of what can be accomplished with frame layouts. The main takeaway here is frame layouts can be a valuable tool when developing views that might have extensive animations or highly custom UI and/or UX. This of course comes with the trade off of having to manage your own layouts mathematically which might be more cognitive overhead when dealing with things like rotation, size classes, different layouts for different devices, etc. The other neat thing is you can actually mix both frame layout views and Auto Layout managed views with just a few properties. You can find more info about that in Apple's WWDC talk [here](https://developer.apple.com/videos/play/wwdc2015/219/) but just a quick TLDR; it centers around the `translatesAutoresizingMaskIntoConstraints` property. The documentation for that can be found [here](https://developer.apple.com/documentation/uikit/uiview/1622572-translatesautoresizingmaskintoco).
 
-I hope this brief primer was informative on some of the uses and trade offs of frame layouts. I plan to follow this article up with a few more to showcase more complex animations and even maybe some of the more tedious code that AutoLayout might simplify in non-animated cases. As always, any questions, concerns, random rants, praise, or thoughful disagreements send it my way.
+I hope this brief primer was informative on some of the uses and trade offs of frame layouts. I plan to follow this up with a few more articles to showcase more complex animations and even maybe some of the more tedious code that AutoLayout might simplify in non-animated cases. As always, any questions, concerns, random rants, praise, or thoughful disagreements send it my way.
 
 - [Apple's view property](https://developer.apple.com/documentation/uikit/uiview/1622572-translatesautoresizingmaskintoco)
 - [WWDC Video](https://developer.apple.com/videos/play/wwdc2015/219/)
